@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1050464866927",
+    "project_id": "wish-i",
+    "storage_bucket": "wish-i.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050464866927:android:d6875b8cf15783c01af39a",
+        "android_client_info": {
+          "package_name": "com.example.loginapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAULAYu8xwT6F_3gne4Q-wOZutM_nMuQcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050464866927:android:e7688f7d75bde3491af39a",
+        "android_client_info": {
+          "package_name": "com.example.wishit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAULAYu8xwT6F_3gne4Q-wOZutM_nMuQcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
