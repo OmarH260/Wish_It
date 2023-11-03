@@ -1,15 +1,18 @@
 package com.example.wishit.AddDataFire;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
+import com.example.wishit.FirebaseServices;
+import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,13 +22,13 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AllRestaurantsFragment#newInstance} factory method to
+ * Use the {@link AllProductsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllRestaurantsFragment extends Fragment {
+public class AllProductsFragment extends Fragment {
 
     private FirebaseServices fbs;
-    private ArrayList<Restaurant> rests;
+    private ArrayList<Product> prods;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,7 +39,7 @@ public class AllRestaurantsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AllRestaurantsFragment() {
+    public AllProductsFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +49,11 @@ public class AllRestaurantsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AllRestaurantsFragment.
+     * @return A new instance of fragment AllProductsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllRestaurantsFragment newInstance(String param1, String param2) {
-        AllRestaurantsFragment fragment = new AllRestaurantsFragment();
+    public static AllProductsFragment newInstance(String param1, String param2) {
+        AllProductsFragment fragment = new AllProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,7 +74,7 @@ public class AllRestaurantsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_restaurants, container, false);
+        return inflater.inflate(R.layout.fragment_all_products, container, false);
     }
 
     @Override
@@ -79,21 +82,22 @@ public class AllRestaurantsFragment extends Fragment {
         super.onStart();
 
         fbs = FirebaseServices.getInstance();
-        rests = new ArrayList<>();
-        fbs.getFire().collection("restaurants").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        prods = new ArrayList<>();
+        fbs.getFire().collection("Product" +
+                "").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
-                    Restaurant rest = dataSnapshot.toObject(Restaurant.class);
+                    Product rest = dataSnapshot.toObject(Product.class);
 
-                    rests.add(rest);
+                    prods.add(rest);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                Log.e("AllRestaurantsFragment", e.getMessage());
+                Log.e("AllProductsFragment", e.getMessage());
             }
         });
     }

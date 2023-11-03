@@ -5,8 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import com.example.wishit.AddDataFire.AddRestaurantFragment;
-import com.example.wishit.SingUpLogin.ForgotFragment;
+import com.example.wishit.AddDataFire.AddProductFragment;
 import com.example.wishit.SingUpLogin.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void gotoAddProduct(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AddRestaurantFragment());
+        ft.replace(R.id.frameLayoutMain, new AddProductFragment());
+        ft.commit();
     }
 }

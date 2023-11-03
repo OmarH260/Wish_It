@@ -1,6 +1,11 @@
 package com.example.wishit.AddDataFire;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
+import com.example.wishit.FirebaseServices;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,13 +22,15 @@ import com.google.firebase.firestore.DocumentReference;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddRestaurantFragment#newInstance} factory method to
+ * Use the {@link AddProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddRestaurantFragment extends Fragment {
+public class AddProductFragment extends Fragment {
 
     private FirebaseServices fbs;
-    private EditText etName, etDescription, etAddress, etPhone;
+
+    private RecyclerView rvProducts;
+    private EditText etTittle, etDescription, etPrice;
     private Button btnAdd;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +42,7 @@ public class AddRestaurantFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AddRestaurantFragment() {
+    public AddProductFragment() {
         // Required empty public constructor
     }
 
@@ -50,8 +55,8 @@ public class AddRestaurantFragment extends Fragment {
      * @return A new instance of fragment AddRestaurantFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddRestaurantFragment newInstance(String param1, String param2) {
-        AddRestaurantFragment fragment = new AddRestaurantFragment();
+    public static AddProductFragment newInstance(String param1, String param2) {
+        AddProductFragment fragment = new AddProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,7 +77,7 @@ public class AddRestaurantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_restaurant, container, false);
+        return inflater.inflate(R.layout.fragment_add_product, container, false);
     }
 
     @Override
@@ -85,41 +90,39 @@ public class AddRestaurantFragment extends Fragment {
 
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
-        etName = getView().findViewById(R.id.etNameAddRestaurantFragment);
-        etDescription = getView().findViewById(R.id.etDescAddRestaurantFragment);
-        etAddress = getView().findViewById(R.id.etAddressAddRestaurantFragment);
-        etPhone = getView().findViewById(R.id.etPhoneAddRestaurantFragment);
-        btnAdd = getView().findViewById(R.id.btnAddAddRestaurantFragment);
+        etTittle = getView().findViewById(R.id.etTittleAddProductFragment);
+        etDescription = getView().findViewById(R.id.etDescAddProductFragment);
+        etPrice = getView().findViewById(R.id.etPriceAddProductFragment);
+        rvProducts = getView().findViewById(R.id.rvProductsProFragment);
+        btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // get data from screen
-                String name = etName.getText().toString();
+                String tittle = etTittle.getText().toString();
                 String description = etDescription.getText().toString();
-                String address = etAddress.getText().toString();
-                String phone = etPhone.getText().toString();
-
+                String price = etPrice.getText().toString();
                 // data validation
-                if (name.trim().isEmpty() || description.trim().isEmpty() ||
-                        address.trim().isEmpty() || phone.trim().isEmpty())
+                if (tittle.trim().isEmpty() || description.trim().isEmpty() ||
+                        price.trim().isEmpty())
                 {
                     Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 // add data to firestore
-                Restaurant rest = new Restaurant(name, description, address, phone);
+                Product product = new Product(tittle, description, price);
 
-                fbs.getFire().collection("restaurants").add(rest).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                fbs.getFire().collection("product").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(), "Successfully added your restaurant!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("Failure AddRestaurant: ", e.getMessage());
+                        Log.e("Failure AddProduct: ", e.getMessage());
                     }
                 });
 
