@@ -143,4 +143,12 @@ public class LoginFragment extends Fragment {
         ft.replace(R.id.frameLayoutMain, new ForgotFragment());
         ft.commit();
     }
+
+    public EditText getEtEmail() {
+        return etEmail;
+    }
+
+    public EditText getEtPassword() {
+        return etPassword;
+    }
 }

@@ -29,6 +29,7 @@ public class AllProductsFragment extends Fragment {
 
     private FirebaseServices fbs;
     private ArrayList<Product> prods;
+    private ProductAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,6 +93,7 @@ public class AllProductsFragment extends Fragment {
 
                     prods.add(rest);
                 }
+                adapter.notifyDataSetChanged();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
