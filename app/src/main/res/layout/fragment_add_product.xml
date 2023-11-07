@@ -22,6 +22,7 @@
             android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/etDescAddProductFragment"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.472"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +55,7 @@
             android:id="@+id/btnAddAddProductFragment"
             android:layout_width="161dp"
             android:layout_height="53dp"
-            android:layout_marginBottom="249dp"
+            android:layout_marginBottom="320dp"
             android:text="Add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

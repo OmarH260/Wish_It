@@ -10,11 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/btnSendForgot"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="96dp"
+            android:backgroundTint="#22BE73"
+            android:text="Send"
+            app:cornerRadius="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="215dp" />
+
         <EditText
             android:id="@+id/etEmailForgot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
+            android:layout_width="245dp"
+            android:layout_height="45dp"
+            android:background="#E3E3E3"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
@@ -22,24 +34,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnSendForgot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#4C784E"
-            android:text="Send"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmailForgot" />
-
         <ImageButton
             android:id="@+id/btnBackSignup"
             android:layout_width="70dp"
             android:layout_height="47dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="24dp"
             android:backgroundTint="#FFFFFF"
             android:src="@drawable/arrow_back"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="27dp" />
+            android:tint="#555555"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
