@@ -9,20 +9,74 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffff">
 
         <ImageButton
             android:id="@+id/btnLogoHome"
-            android:layout_width="200dp"
-            android:layout_height="118dp"
+            android:layout_width="215dp"
+            android:layout_height="60dp"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="100dp"
             android:backgroundTint="#00FFFFFF"
             android:src="@drawable/wish_it_250"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/verticalLine"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10.2dp"
+            android:background="#969FAA"
+            app:layout_constraintBottom_toTopOf="@+id/btnHomeHome"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/whiteBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="1dp"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/verticalLine"
+            app:layout_constraintTop_toBottomOf="@+id/verticalLine" />
+
+        <ImageButton
+            android:id="@+id/btnHomeHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/homegreen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnSearchHpme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnAccountHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="43dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/account"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

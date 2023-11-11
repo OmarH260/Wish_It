@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.WishIt" parent="Base.Theme.WishIt" />
+
+    <style name="Theme.WishIt.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.WishIt.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.WishIt.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
