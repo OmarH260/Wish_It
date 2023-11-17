@@ -10,12 +10,17 @@ import com.example.wishit.SingUpLogin.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gotoHomeFragment();
+        FirebaseServices fbs = FirebaseServices.getInstance();
+
+        if (fbs.getAuth().getCurrentUser() == null)
+            gotoLoginFragment();
+        else gotoHomeFragment();
     }
 
     private void gotoHomeFragment() {
@@ -27,12 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private void gotoLoginFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new LoginFragment());
-        ft.commit();
-    }
-
-    private void gotoAddProduct(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AddProductFragment());
         ft.commit();
     }
 }

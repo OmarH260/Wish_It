@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wishit.FirebaseServices;
+import com.example.wishit.HomeFragment;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -106,7 +107,7 @@ public class LoginFragment extends Fragment {
                 fbs.getAuth().signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(getActivity(), "Succeeded", Toast.LENGTH_SHORT).show();
+                        gotoHomeFragment();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -144,6 +145,13 @@ public class LoginFragment extends Fragment {
         ft.commit();
     }
 
+    private void gotoHomeFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain,new HomeFragment());
+        ft.commit();
+    }
+
+
     public EditText getEtEmail() {
         return etEmail;
     }
@@ -151,4 +159,5 @@ public class LoginFragment extends Fragment {
     public EditText getEtPassword() {
         return etPassword;
     }
+
 }

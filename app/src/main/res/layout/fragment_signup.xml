@@ -39,10 +39,12 @@
             android:id="@+id/btnBackSignup"
             android:layout_width="65dp"
             android:layout_height="45dp"
-            android:backgroundTint="#FFFFFF"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
             android:src="@drawable/arrow_back"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnSignupSignup"

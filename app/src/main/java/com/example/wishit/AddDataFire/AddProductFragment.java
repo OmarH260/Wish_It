@@ -28,7 +28,6 @@ import com.google.firebase.firestore.DocumentReference;
 public class AddProductFragment extends Fragment {
 
     private FirebaseServices fbs;
-
     private RecyclerView rvProducts;
     private EditText etTittle, etDescription, etPrice;
     private Button btnAdd;

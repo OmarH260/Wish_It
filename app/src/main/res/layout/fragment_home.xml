@@ -70,10 +70,12 @@
             android:id="@+id/btnAddHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#0046D08D"
             android:src="@drawable/baseline_add_32"
-            tools:layout_editor_absoluteX="177dp"
-            tools:layout_editor_absoluteY="664dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnOrdersHome" />
 
         <ImageButton
             android:id="@+id/btnAccountHome"
@@ -98,10 +100,12 @@
             app:layout_constraintStart_toEndOf="@+id/btnSearchHpme" />
 
         <ScrollView
-            android:layout_width="412dp"
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
             android:layout_height="418dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="235dp">
+            app:layout_constraintBottom_toTopOf="@+id/verticalLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,14 +114,36 @@
         </ScrollView>
 
         <ScrollView
-            android:layout_width="413dp"
-            android:layout_height="129dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="84dp">
+            android:id="@+id/scrollView3"
+            android:layout_width="801dp"
+            android:layout_height="119dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginBottom="22dp"
+            android:fadeScrollbars="true"
+            android:isScrollContainer="true"
+            android:overScrollMode="ifContentScrolls"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogoHome">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/account" />
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/accountgreen" />
+            </LinearLayout>
         </ScrollView>
 
 
