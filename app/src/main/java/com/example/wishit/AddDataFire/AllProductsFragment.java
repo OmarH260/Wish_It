@@ -93,7 +93,7 @@ public class AllProductsFragment extends Fragment {
         rvProds.setAdapter(adapter);
         rvProds.setHasFixedSize(true);
         rvProds.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fbs.getFire().collection("product" + "").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fbs.getFire().collection("product").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){

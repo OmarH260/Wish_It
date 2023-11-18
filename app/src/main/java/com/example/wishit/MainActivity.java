@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
             gotoLoginFragment();
         else gotoHomeFragment();
 
-
     }
 
     private void gotoHomeFragment() {
