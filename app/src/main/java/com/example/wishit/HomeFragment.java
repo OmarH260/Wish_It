@@ -3,12 +3,17 @@ package com.example.wishit;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.example.wishit.AddDataFire.AddProductFragment;
+import com.example.wishit.AddDataFire.AllProductsFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +21,8 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    ImageButton btnLogoHome;
+    ImageButton btnLogoHome, btnAdd;
+    Button btnShow;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +78,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void connectComponents() {
+        btnAdd = getView().findViewById(R.id.btnAddHome);
+        btnShow = getView().findViewById(R.id.btnShowHome);
         btnLogoHome = getView().findViewById(R.id.btnLogoHome);
         btnLogoHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,5 +88,30 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAddProductsFragment();
+            }
+        });
+
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAllProductsFragment();
+            }
+        });
+
+    }
+    private void gotoAllProductsFragment(){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new AllProductsFragment());
+        ft.commit();
+    }
+
+    private void gotoAddProductsFragment(){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new AddProductFragment());
+        ft.commit();
     }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,7 @@ public class AllProductsFragment extends Fragment {
 
     private FirebaseServices fbs;
     private ArrayList<Product> prods;
+    private RecyclerView rvProds;
     private ProductAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -84,14 +88,18 @@ public class AllProductsFragment extends Fragment {
 
         fbs = FirebaseServices.getInstance();
         prods = new ArrayList<>();
-        fbs.getFire().collection("Product" +
-                "").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        rvProds = getView().findViewById(R.id.rvProductsProFragment);
+        adapter = new ProductAdapter(getActivity(), prods);
+        rvProds.setAdapter(adapter);
+        rvProds.setHasFixedSize(true);
+        rvProds.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fbs.getFire().collection("product" + "").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
-                    Product rest = dataSnapshot.toObject(Product.class);
+                    Product product = dataSnapshot.toObject(Product.class);
 
-                    prods.add(rest);
+                    prods.add(product);
                 }
                 adapter.notifyDataSetChanged();
             }
