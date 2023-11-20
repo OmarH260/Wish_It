@@ -1,4 +1,4 @@
-package com.example.wishit.AddDataFire;
+package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
@@ -14,7 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.wishit.FirebaseServices;
+import com.example.wishit.AddDataFire.Product;
+import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

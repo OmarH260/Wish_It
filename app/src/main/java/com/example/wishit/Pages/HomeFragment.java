@@ -1,4 +1,4 @@
-package com.example.wishit;
+package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import com.example.wishit.AddDataFire.AddProductFragment;
-import com.example.wishit.AddDataFire.AllProductsFragment;
+import com.example.wishit.R;
 
 /**
  * A simple {@link Fragment} subclass.

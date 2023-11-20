@@ -5,8 +5,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import com.example.wishit.AddDataFire.AddProductFragment;
-import com.example.wishit.AddDataFire.AllProductsFragment;
+import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Pages.AllProductsFragment;
+import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.SingUpLogin.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {

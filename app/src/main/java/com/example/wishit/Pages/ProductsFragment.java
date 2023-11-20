@@ -1,4 +1,4 @@
-package com.example.wishit.AddDataFire;
+package com.example.wishit.Pages;
 
 import android.os.Bundle;
 

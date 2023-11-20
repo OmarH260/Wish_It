@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.wishit.FirebaseServices;
+import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

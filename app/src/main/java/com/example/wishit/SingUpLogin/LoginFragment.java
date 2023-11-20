@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.wishit.FirebaseServices;
-import com.example.wishit.HomeFragment;
+import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

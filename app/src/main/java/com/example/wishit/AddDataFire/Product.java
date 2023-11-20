@@ -1,6 +1,7 @@
 package com.example.wishit.AddDataFire;
 
 public class Product {
+    private String photo;
     private String tittle;
     private String description;
     private String price;
@@ -8,10 +9,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(String tittle, String description, String price) {
+    public Product(String tittle, String description, String price, String photo) {
         this.tittle = tittle;
         this.description = description;
         this.price = price;
+        this.photo = photo;
     }
 
     public String getTittle() {
