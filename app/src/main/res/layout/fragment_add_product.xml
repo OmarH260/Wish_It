@@ -9,7 +9,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="@+id/etDescAddProductFragment"
+        app:layout_constraintStart_toEndOf="@+id/etDescAddProductFragment">
 
         <EditText
             android:id="@+id/etTittleAddProductFragment"
@@ -62,7 +64,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/ivShowAddProduct"
             android:layout_width="122dp"
             android:layout_height="106dp"
             android:src="@drawable/ic_launcher_background"

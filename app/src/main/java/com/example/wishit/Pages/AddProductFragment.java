@@ -1,22 +1,27 @@
 package com.example.wishit.Pages;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.R;
+import com.example.wishit.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,9 +33,12 @@ import com.google.firebase.firestore.DocumentReference;
  */
 public class AddProductFragment extends Fragment {
 
+    private static final int GALLERY_REQUEST_CODE = 123;
     private FirebaseServices fbs;
     private RecyclerView rvProducts;
     private EditText etTittle, etDescription, etPrice;
+    private ImageView ivShow;
+    private Utils utils;
     private Button btnAdd;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -91,10 +99,20 @@ public class AddProductFragment extends Fragment {
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
         etTittle = getView().findViewById(R.id.etTittleAddProductFragment);
+        utils = Utils.getInstance();
         etDescription = getView().findViewById(R.id.etDescAddProductFragment);
         etPrice = getView().findViewById(R.id.etPriceAddProductFragment);
         rvProducts = getView().findViewById(R.id.rvProductsProFragment);
+        ivShow = getView().findViewById(R.id.ivShowAddProduct);
         btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
+
+        ivShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +130,7 @@ public class AddProductFragment extends Fragment {
                 }
 
                 // add data to firestore
-                Product product = new Product(tittle, description, price);
+                Product product = new Product(tittle, description, price, fbs.getSelectedImageURL().toString());
 
                 fbs.getFire().collection("product").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -129,5 +147,19 @@ public class AddProductFragment extends Fragment {
 
             }
         });
+    }
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == getActivity().RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            ivShow.setImageURI(selectedImageUri);
+            utils.uploadImage(getActivity(), selectedImageUri);
+        }
     }
 }
