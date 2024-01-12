@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Pages.AddCardFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivPhotoAddCard"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/etTitleAddCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <EditText
+            android:id="@+id/etTitleAddCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:backgroundTint="#00FFFFFF"
+            android:ems="10"
+            android:hint="Title"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddAddCard"
+            app:layout_constraintStart_toStartOf="@+id/ivPhotoAddCard"
+            app:layout_constraintTop_toBottomOf="@+id/ivPhotoAddCard" />
+
+        <Button
+            android:id="@+id/btnAddAddCard"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="190dp"
+            android:backgroundTint="#22BE73"
+            android:text="Add"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etTitleAddCard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

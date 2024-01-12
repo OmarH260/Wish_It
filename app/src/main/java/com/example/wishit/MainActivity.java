@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.Pages.AllProductsFragment;
 import com.example.wishit.Pages.HomeFragment;
-import com.example.wishit.SingUpLogin.LoginFragment;
+import com.example.wishit.Pages.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseServices fbs = FirebaseServices.getInstance();
 
-        if (fbs.getAuth().getCurrentUser() == null)
-            gotoLoginFragment();
-        else gotoHomeFragment();
+        //if (fbs.getAuth().getCurrentUser() == null)
+          //  gotoLoginFragment();
+         gotoHomeFragment();
 
     }
 

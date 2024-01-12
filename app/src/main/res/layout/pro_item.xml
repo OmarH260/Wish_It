@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Root layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"> <!-- Consider adding orientation -->
 
+    <!-- Title TextView -->
     <TextView
-        android:id="@+id/tvTittleProItem"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvTitleProItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
+    <!-- Price TextView -->
     <TextView
         android:id="@+id/tvPriceProItem"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
+    <!-- Description TextView -->
     <TextView
         android:id="@+id/tvDescriptionProItem"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
+
+    <!-- Photo ImageView -->
+    <ImageView
+        android:id="@+id/ivPhotoProItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_menu_gallery" />
+
 </LinearLayout>

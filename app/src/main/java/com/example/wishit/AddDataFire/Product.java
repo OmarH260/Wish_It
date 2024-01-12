@@ -4,6 +4,25 @@ public class Product {
     private String photo;
     private String tittle;
     private String description;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "photo='" + photo + '\'' +
+                ", tittle='" + tittle + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     private String price;
 
     public Product() {
@@ -40,12 +59,4 @@ public class Product {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "tittle='" + tittle + '\'' +
-                ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                '}';
-    }
 }

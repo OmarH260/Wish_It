@@ -117,13 +117,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Show" />
+
+                <Button
+                    android:id="@+id/btnAddCardHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Card" />
             </LinearLayout>
         </ScrollView>
 
         <ScrollView
             android:id="@+id/scrollView3"
-            android:layout_width="801dp"
-            android:layout_height="119dp"
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
             android:layout_marginTop="23dp"
             android:layout_marginBottom="22dp"
             android:fadeScrollbars="true"
@@ -133,9 +139,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnLogoHome">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCardsHome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </ScrollView>
 
 

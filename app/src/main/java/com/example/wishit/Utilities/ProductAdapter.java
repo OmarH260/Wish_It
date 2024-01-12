@@ -1,16 +1,21 @@
-package com.example.wishit.AddDataFire;
+package com.example.wishit.Utilities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>
@@ -19,7 +24,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private Context context;
     private FirebaseServices fbs;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    public ProductAdapter(Context context, ArrayList<Product> productList) {
         this.productList = productList;
         this.context = context;
         this.fbs = FirebaseServices.getInstance();
@@ -38,6 +43,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.tvTittle.setText(product.getTittle());
         holder.tvDescription.setText(product.getDescription());
         holder.tvPrice.setText(product.getPrice());
+        if (product.getPhoto() == null || product.getPhoto().isEmpty())
+        {
+            Picasso.get().load(R.drawable.ic_menu_gallery).into(holder.ivPhoto);
+        }
+        else {
+            Picasso.get().load(product.getPhoto()).into(holder.ivPhoto);
+        }
     }
 
     @Override
@@ -47,14 +59,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvPrice, tvTittle, tvDescription;
+        ImageView ivPhoto;
         int position;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvTittle = itemView.findViewById(R.id.tvTittleProItem);
+            tvTittle = itemView.findViewById(R.id.tvTitleProItem);
             tvPrice = itemView.findViewById(R.id.tvPriceProItem);
             tvDescription = itemView.findViewById(R.id.tvDescriptionProItem);
-            itemView.setOnClickListener(this);
+            ivPhoto = itemView.findViewById(R.id.ivPhotoProItem);
         }
 
         @Override

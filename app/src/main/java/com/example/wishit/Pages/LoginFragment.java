@@ -1,4 +1,4 @@
-package com.example.wishit.SingUpLogin;
+package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

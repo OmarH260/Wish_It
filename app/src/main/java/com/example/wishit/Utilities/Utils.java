@@ -1,4 +1,4 @@
-package com.example.wishit;
+package com.example.wishit.Utilities;
 
 import android.content.Context;
 import android.content.DialogInterface;

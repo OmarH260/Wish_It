@@ -2,16 +2,32 @@ package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.example.wishit.AddDataFire.Card;
+import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+import com.example.wishit.Utilities.CardAdapter;
+import com.example.wishit.Utilities.ProductAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,8 +35,12 @@ import com.example.wishit.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    FirebaseServices fbs;
+    ArrayList<Card> cards;
+    RecyclerView rvCards;
+    CardAdapter cardAdapter;
     ImageButton btnLogoHome, btnAdd;
-    Button btnShow;
+    Button btnShow, btnAddCard;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,12 +93,49 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         connectComponents();
+        CardAdapting();
+    }
+
+    private void CardAdapting() {
+        fbs = FirebaseServices.getInstance();
+        cards = new ArrayList<>();
+        rvCards = getView().findViewById(R.id.rvCardsHome);
+        cardAdapter = new CardAdapter(getActivity(), cards);
+        rvCards.setAdapter(cardAdapter);
+        rvCards.setHasFixedSize(true);
+        rvCards.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fbs.getFire().collection("Cards").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
+                    Card card = dataSnapshot.toObject(Card.class);
+
+                    cards.add(card);
+                }
+                cardAdapter.notifyDataSetChanged();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
+                Log.e("AllProductsFragment", e.getMessage());
+            }
+        });
     }
 
     private void connectComponents() {
         btnAdd = getView().findViewById(R.id.btnAddHome);
+        btnAddCard = getView().findViewById(R.id.btnAddCardHome);
         btnShow = getView().findViewById(R.id.btnShowHome);
         btnLogoHome = getView().findViewById(R.id.btnLogoHome);
+
+        btnAddCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAddCardsFragment();
+            }
+        });
+
         btnLogoHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +167,12 @@ public class HomeFragment extends Fragment {
     private void gotoAddProductsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new AddProductFragment());
+        ft.commit();
+    }
+
+    private void gotoAddCardsFragment(){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new AddCardFragment());
         ft.commit();
     }
 }
