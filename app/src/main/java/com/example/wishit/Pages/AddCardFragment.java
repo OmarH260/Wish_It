@@ -98,7 +98,7 @@ public class AddCardFragment extends Fragment {
         fbs = FirebaseServices.getInstance();
         etTitle = getView().findViewById(R.id.etTitleAddCard);
         utils = Utils.getInstance();
-        ivPhoto = getView().findViewById(R.id.ivPhotoCard);
+        ivPhoto = getView().findViewById(R.id.ivPhotoAddCard);
         btnAdd = getView().findViewById(R.id.btnAddAddCard);
 
         ivPhoto.setOnClickListener(new View.OnClickListener() {

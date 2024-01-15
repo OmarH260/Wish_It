@@ -20,7 +20,7 @@
             app:layout_constraintBottom_toTopOf="@+id/etTitleAddCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@drawable/ic_launcher_background" />
 
         <EditText
             android:id="@+id/etTitleAddCard"
