@@ -93,10 +93,10 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         connectComponents();
-        CardAdapting();
+        setupCardAdapter();
     }
 
-    private void CardAdapting() {
+    private void setupCardAdapter() {
         fbs = FirebaseServices.getInstance();
         cards = new ArrayList<>();
         rvCards = getView().findViewById(R.id.rvCardsHome);

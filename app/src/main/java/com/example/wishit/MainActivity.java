@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         //if (fbs.getAuth().getCurrentUser() == null)
           //  gotoLoginFragment();
-         //else gotoHomeFragment();
-        gotoAllProductsFragment();
+          gotoHomeFragment();
+        //gotoAllProductsFragment();
 
     }
 

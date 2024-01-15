@@ -4,6 +4,9 @@ public class Card {
     private String photo;
     private String title;
 
+    public Card() {
+    }
+
     public Card(String photo, String title) {
         this.photo = photo;
         this.title = title;

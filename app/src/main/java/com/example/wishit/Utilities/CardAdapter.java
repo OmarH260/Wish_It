@@ -8,12 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishit.AddDataFire.Card;
 import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
 import com.squareup.picasso.Picasso;
 
@@ -31,8 +29,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         this.context = context;
         this.fbs = FirebaseServices.getInstance();
     }
-
-
 
     @NonNull
     @Override
@@ -67,8 +63,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitleCard);
-            ivPhoto = itemView.findViewById(R.id.ivPhotoCard);
+            tvTitle = itemView.findViewById(R.id.tvTitleCardItem);
+            ivPhoto = itemView.findViewById(R.id.ivPhotoCardItem);
         }
 
         @Override
