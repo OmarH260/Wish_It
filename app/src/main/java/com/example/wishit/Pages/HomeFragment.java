@@ -1,5 +1,6 @@
 package com.example.wishit.Pages;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -103,13 +104,20 @@ public class HomeFragment extends Fragment {
         cardAdapter = new CardAdapter(getActivity(), cards);
         rvCards.setAdapter(cardAdapter);
         rvCards.setHasFixedSize(true);
-        rvCards.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Set LinearLayoutManager to horizontal
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvCards.setLayoutManager(layoutManager);
+
+        int spaceInPixels = 10; // Adjust this value as needed
+        rvCards.addItemDecoration(new SpacesItemDecoration(spaceInPixels));
+
+
         fbs.getFire().collection("Cards").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
+                for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Card card = dataSnapshot.toObject(Card.class);
-
                     cards.add(card);
                 }
                 cardAdapter.notifyDataSetChanged();
@@ -122,6 +130,29 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private final int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+
+            // Add top margin only for the first item to avoid double space between items
+            if (parent.getChildAdapterPosition(view) == 0) {
+                outRect.top = space;
+            }
+        }
+    }
+
+
 
     private void connectComponents() {
         btnAdd = getView().findViewById(R.id.btnAddHome);

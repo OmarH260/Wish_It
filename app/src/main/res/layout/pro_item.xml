@@ -29,7 +29,7 @@
     <!-- Photo ImageView -->
     <ImageView
         android:id="@+id/ivPhotoProItem"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:src="@drawable/ic_menu_gallery" />
