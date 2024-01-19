@@ -38,8 +38,10 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     FirebaseServices fbs;
     ArrayList<Card> cards;
-    RecyclerView rvCards;
+    ArrayList<Product> products;
+    RecyclerView rvCards,rvProducts;
     CardAdapter cardAdapter;
+    ProductAdapter productAdapter;
     ImageButton btnLogoHome, btnAdd;
     Button btnShow, btnAddCard;
 
@@ -95,8 +97,12 @@ public class HomeFragment extends Fragment {
         super.onStart();
         connectComponents();
         setupCardAdapter();
+        setupProductAdapter();
     }
 
+
+
+    //Setup adapters
     private void setupCardAdapter() {
         fbs = FirebaseServices.getInstance();
         cards = new ArrayList<>();
@@ -131,6 +137,34 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void setupProductAdapter() {
+        fbs = FirebaseServices.getInstance();
+        products = new ArrayList<>();
+        rvProducts = getView().findViewById(R.id.rvProductsHome);
+        productAdapter = new ProductAdapter(getActivity(), products);
+        rvProducts.setAdapter(productAdapter);
+        rvProducts.setHasFixedSize(true);
+        rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fbs.getFire().collection("product").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
+                    Product product = dataSnapshot.toObject(Product.class);
+
+                    products.add(product);
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
+                Log.e("AllProductsFragment", e.getMessage());
+            }
+        });
+    }
+
+    //Designing
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private final int space;
 
@@ -191,19 +225,19 @@ public class HomeFragment extends Fragment {
     }
     private void gotoAllProductsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AllProductsFragment());
+        ft.replace(R.id.rvProductsHome, new AllProductsFragment());
         ft.commit();
     }
 
     private void gotoAddProductsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AddProductFragment());
+        ft.replace(R.id.rvProductsHome, new AddProductFragment());
         ft.commit();
     }
 
     private void gotoAddCardsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AddCardFragment());
+        ft.replace(R.id.rvProductsHome, new AddCardFragment());
         ft.commit();
     }
 }

@@ -30,25 +30,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void gotoHomeFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain,new HomeFragment());
+        ft.replace(R.id.rvProductsHome,new HomeFragment());
         ft.commit();
     }
 
     private void gotoLoginFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new LoginFragment());
+        ft.replace(R.id.rvProductsHome, new LoginFragment());
         ft.commit();
     }
 
     private void gotoAllProductsFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AllProductsFragment());
+        ft.replace(R.id.rvProductsHome, new AllProductsFragment());
         ft.commit();
     }
 
     private void gotoAddCardFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AddCardFragment());
+        ft.replace(R.id.rvProductsHome, new AddCardFragment());
         ft.commit();
     }
 }
