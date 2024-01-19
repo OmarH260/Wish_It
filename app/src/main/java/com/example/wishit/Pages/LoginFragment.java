@@ -134,19 +134,19 @@ public class LoginFragment extends Fragment {
 
     private void gotoSignupFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.rvProductsHome, new SignupFragment());
+        ft.replace(R.id.frameLayoutMain, new SignupFragment());
         ft.commit();
     }
 
     private void gotoForgotFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.rvProductsHome, new ForgotFragment());
+        ft.replace(R.id.frameLayoutMain, new ForgotFragment());
         ft.commit();
     }
 
     private void gotoHomeFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.rvProductsHome,new HomeFragment());
+        ft.replace(R.id.frameLayoutMain,new HomeFragment());
         ft.commit();
     }
 
