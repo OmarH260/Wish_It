@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
     CardAdapter cardAdapter;
     ProductAdapter productAdapter;
     ImageButton btnLogoHome, btnAdd;
-    Button btnShow, btnAddCard;
+    Button  btnAddCard;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -191,7 +191,6 @@ public class HomeFragment extends Fragment {
     private void connectComponents() {
         btnAdd = getView().findViewById(R.id.btnAddHome);
         btnAddCard = getView().findViewById(R.id.btnAddCardHome);
-        btnShow = getView().findViewById(R.id.btnShowHome);
         btnLogoHome = getView().findViewById(R.id.btnLogoHome);
 
         btnAddCard.setOnClickListener(new View.OnClickListener() {
@@ -212,13 +211,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gotoAddProductsFragment();
-            }
-        });
-
-        btnShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoAllProductsFragment();
             }
         });
 

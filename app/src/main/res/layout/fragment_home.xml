@@ -11,16 +11,25 @@
         android:layout_height="match_parent"
         android:background="#ffff">
 
+        <Button
+            android:id="@+id/btnAddCardHome"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="18dp"
+            android:text="Add Card"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="270dp"
+            tools:visibility="gone" />
+
         <ImageButton
             android:id="@+id/btnLogoHome"
-            android:layout_width="215dp"
-            android:layout_height="0dp"
+            android:layout_width="222dp"
+            android:layout_height="68dp"
             android:layout_marginStart="100dp"
             android:layout_marginEnd="100dp"
-            android:layout_marginBottom="207dp"
             android:backgroundTint="#00FFFFFF"
             android:src="@drawable/wish_it_250"
-            app:layout_constraintBottom_toTopOf="@+id/btnShowHome"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -100,36 +109,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSearchHpme" />
 
-        <Button
-            android:id="@+id/btnAddCardHome"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="3dp"
-            android:text="Add Card"
-            app:layout_constraintBottom_toBottomOf="@+id/btnShowHome"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnShowHome"
-            app:layout_constraintTop_toTopOf="@+id/btnShowHome" />
-
-        <Button
-            android:id="@+id/btnShowHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="416dp"
-            android:text="Show"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnAddCardHome"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogoHome" />
-
         <ScrollView
             android:id="@+id/scrollView3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
             android:fadeScrollbars="true"
             android:isScrollContainer="true"
@@ -143,24 +126,17 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCardsHome"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="76dp"
-                    app:layout_constraintBottom_toTopOf="@+id/rvProductsHome"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_width="411dp"
+                    android:layout_height="wrap_content">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProductsHome"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rvCardsHome" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="-16dp"
+                    tools:layout_editor_absoluteY="337dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
