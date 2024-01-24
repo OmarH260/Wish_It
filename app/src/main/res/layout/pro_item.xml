@@ -1,32 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Root layout -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/ivPhotoProItem"
+            android:layout_width="2dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tvTitleProItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tile Name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPriceProItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price" />
+
+            <TextView
+                android:id="@+id/tvDescriptionProItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"> <!-- Consider adding orientation -->
+    android:orientation="horizontal">
 
-    <!-- Title TextView -->
     <TextView
         android:id="@+id/tvTitleProItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <!-- Price TextView -->
     <TextView
         android:id="@+id/tvPriceProItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <!-- Description TextView -->
     <TextView
         android:id="@+id/tvDescriptionProItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <!-- Photo ImageView -->
     <ImageView
         android:id="@+id/ivPhotoProItem"
         android:layout_width="wrap_content"
@@ -34,4 +81,4 @@
         android:layout_weight="1"
         android:src="@drawable/ic_menu_gallery" />
 
-</LinearLayout>
+</LinearLayout>-->

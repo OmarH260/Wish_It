@@ -1,6 +1,11 @@
 package com.example.wishit.AddDataFire;
 
-public class Product {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Product implements Parcelable {
     private String photo;
     private String tittle;
     private String description;
@@ -16,6 +21,25 @@ public class Product {
         this.photo = photo;
     }
 
+
+    protected Product(Parcel in) {
+        photo = in.readString();
+        tittle = in.readString();
+        description = in.readString();
+        price = in.readString();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getPhoto() {
         return photo;
@@ -57,4 +81,16 @@ public class Product {
                 '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(photo);
+        dest.writeString(tittle);
+        dest.writeString(description);
+        dest.writeString(price);
+    }
 }
