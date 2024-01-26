@@ -1,6 +1,7 @@
-package com.example.wishit.Utilities;
+package com.example.wishit.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishit.AddDataFire.Card;
 import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.MainActivity;
+import com.example.wishit.Pages.ProductDetailsFragment;
 import com.example.wishit.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,12 +26,29 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
     private List<Card> cardsList;
     private Context context;
     private FirebaseServices fbs;
+    private CardAdapter.OnItemClickListener itemClickListener;
 
 
     public CardAdapter(Context context, ArrayList<Card> cardsList) {
         this.cardsList = cardsList;
         this.context = context;
         this.fbs = FirebaseServices.getInstance();
+
+        this.itemClickListener = new CardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                /*
+                String selectedItem = filteredList.get(position).getNameCar();
+                Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show(); */
+                Bundle args = new Bundle();
+                args.putParcelable("car", cardsList.get(position)); // or use Parcelable for better performance
+                ProductDetailsFragment cd = new ProductDetailsFragment();
+                cd.setArguments(args);
+                FragmentTransaction ft= ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frameLayoutMain,cd);
+                ft.commit();
+            }
+        };
     }
 
     @NonNull
@@ -40,7 +61,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cardsList.get(position);
-        holder.tvTitle.setText(card.getTitle());
+        holder.tvTittle.setText(card.getTitle());
+
+        holder.tvTittle.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(position);
+            }
+        });
+
+        holder.ivPhoto.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(position);
+            }
+        });
 
         if (card.getPhoto() == null || card.getPhoto().isEmpty())
         {
@@ -57,13 +90,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvTitle;
+        TextView tvTittle;
         ImageView ivPhoto;
         int position;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitleCardItem);
+            tvTittle = itemView.findViewById(R.id.tvTitleCardItem);
             ivPhoto = itemView.findViewById(R.id.ivPhotoCardItem);
         }
 
@@ -74,5 +107,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
         }
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(CardAdapter.OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
 
 }

@@ -5,20 +5,24 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 public class Product implements Parcelable {
     private String photo;
     private String tittle;
     private String description;
     private String price;
+    private double rating;
 
     public Product() {
     }
 
-    public Product(String tittle, String description, String price, String photo) {
+    public Product(String photo, String tittle, String description, String price, double rating) {
+        this.photo = photo;
         this.tittle = tittle;
         this.description = description;
         this.price = price;
-        this.photo = photo;
+        this.rating = rating;
     }
 
 
@@ -27,6 +31,7 @@ public class Product implements Parcelable {
         tittle = in.readString();
         description = in.readString();
         price = in.readString();
+        rating = Double.parseDouble(Objects.requireNonNull(in.readString()));
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -71,6 +76,15 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "Product{" +
@@ -78,6 +92,7 @@ public class Product implements Parcelable {
                 ", tittle='" + tittle + '\'' +
                 ", description='" + description + '\'' +
                 ", price='" + price + '\'' +
+                ", rating=" + rating +
                 '}';
     }
 
@@ -92,5 +107,6 @@ public class Product implements Parcelable {
         dest.writeString(tittle);
         dest.writeString(description);
         dest.writeString(price);
+        dest.writeString(String.valueOf(rating));
     }
 }

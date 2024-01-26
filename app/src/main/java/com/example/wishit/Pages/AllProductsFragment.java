@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.wishit.AddDataFire.Product;
-import com.example.wishit.Utilities.ProductAdapter;
+import com.example.wishit.Adapters.ProductAdapter;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
