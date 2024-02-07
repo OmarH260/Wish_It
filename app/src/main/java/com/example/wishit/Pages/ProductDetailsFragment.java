@@ -3,12 +3,19 @@ package com.example.wishit.Pages;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +23,12 @@ import com.example.wishit.R;
  * create an instance of this fragment.
  */
 public class ProductDetailsFragment extends Fragment {
+    private FirebaseServices fbs;
+    private RatingBar rbProduct;
+    private RecyclerView rvPhotos;
+    private TextView tvTitle, tvDescription;
+    private ArrayList<Product> products;
+    private float starRating;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +75,32 @@ public class ProductDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product_details, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        connectComponents();
+    }
+
+    private void connectComponents() {
+        fbs = FirebaseServices.getInstance();
+        products = new ArrayList<>();
+        starRating = 5;
+        rvPhotos = getView().findViewById(R.id.rvPhotosProductDetails);
+        tvTitle = getView().findViewById(R.id.tvTitleProductDetails);
+        tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
+    }
+
+    public void calculateStarRating()
+    {
+        float sum = 0;
+        for(Product c : products)
+        {
+            sum += c.getRating();
+        }
+
+        starRating = sum / products.size();
+        rbProduct.setRating(starRating);
     }
 }
