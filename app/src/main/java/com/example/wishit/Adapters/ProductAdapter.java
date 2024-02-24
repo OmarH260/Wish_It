@@ -68,6 +68,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.tvPrice.setText(product.getPrice());
 
 
+
         holder.tvTittle.setOnClickListener(v -> {
             if (itemClickListener != null) {
                 itemClickListener.onItemClick(position);

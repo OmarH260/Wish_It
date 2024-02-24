@@ -27,6 +27,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddProductFragment#newInstance} factory method to
@@ -34,15 +36,6 @@ import com.google.firebase.firestore.DocumentReference;
  */
 public class AddProductFragment extends Fragment {
 
-    private static final int GALLERY_REQUEST_CODE = 123;
-    private FirebaseServices fbs;
-    private RecyclerView rvProducts;
-    private EditText etTittle, etDescription, etPrice;
-    private ImageView ivShow;
-    private Utils utils;
-    private Button btnAdd;
-    private RatingBar rbProduct;
-    private float starRarting;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,6 +45,16 @@ public class AddProductFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private float starRating;
+    private static final int GALLERY_REQUEST_CODE = 123;
+    private FirebaseServices fbs;
+    private RecyclerView rvProducts;
+    private EditText etTittle, etDescription, etPrice;
+    private ImageView ivShow;
+    private Utils utils;
+    private Button btnAdd;
+    private ArrayList<Product> products;
+    private RatingBar rbProduct;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -108,6 +111,7 @@ public class AddProductFragment extends Fragment {
         rvProducts = getView().findViewById(R.id.rvProductsProFragment);
         ivShow = getView().findViewById(R.id.ivShowAddProduct);
         btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
+        rbProduct = getView().findViewById(R.id.rbProductProductDetails);
 
         ivShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +128,8 @@ public class AddProductFragment extends Fragment {
                 String tittle = etTittle.getText().toString();
                 String description = etDescription.getText().toString();
                 String price = etPrice.getText().toString();
+                //RatingBar productRatingBar = getView().findViewById(R.id.rbProductProductDetails);
+                float rating = 0;//productRatingBar.getRating();
                 // data validation
                 if (tittle.trim().isEmpty() || description.trim().isEmpty() ||
                         price.trim().isEmpty())
@@ -133,7 +139,7 @@ public class AddProductFragment extends Fragment {
                 }
 
                 // add data to firestore
-                Product product = new Product(tittle, description, price, fbs.getSelectedImageURL().toString());
+                Product product = new Product(tittle, description, price, fbs.getSelectedImageURL().toString(), 0);
 
                 fbs.getFire().collection("product").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -164,5 +170,16 @@ public class AddProductFragment extends Fragment {
             ivShow.setImageURI(selectedImageUri);
             utils.uploadImage(getActivity(), selectedImageUri);
         }
+    }
+    public void calculateStarRating()
+    {
+        float sum = 0;
+        for(Product c : products)
+        {
+            sum += c.getRating();
+        }
+
+        starRating = sum / products.size();
+        rbProduct.setRating(starRating);
     }
 }

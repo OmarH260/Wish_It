@@ -91,16 +91,4 @@ public class ProductDetailsFragment extends Fragment {
         tvTitle = getView().findViewById(R.id.tvTitleProductDetails);
         tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
     }
-
-    public void calculateStarRating()
-    {
-        float sum = 0;
-        for(Product c : products)
-        {
-            sum += c.getRating();
-        }
-
-        starRating = sum / products.size();
-        rbProduct.setRating(starRating);
-    }
 }
