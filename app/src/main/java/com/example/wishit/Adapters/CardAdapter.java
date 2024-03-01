@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wishit.AddDataFire.Card;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.MainActivity;
+import com.example.wishit.Pages.FilterProductsFragment;
 import com.example.wishit.Pages.ProductDetailsFragment;
 import com.example.wishit.R;
 import com.squareup.picasso.Picasso;
@@ -42,7 +43,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
                 Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show(); */
                 Bundle args = new Bundle();
                 args.putParcelable("car", cardsList.get(position)); // or use Parcelable for better performance
-                ProductDetailsFragment cd = new ProductDetailsFragment();
+                FilterProductsFragment cd = new FilterProductsFragment();
                 cd.setArguments(args);
                 FragmentTransaction ft= ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frameLayoutMain,cd);

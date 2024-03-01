@@ -3,32 +3,19 @@ package com.example.wishit.Pages;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProductDetailsFragment#newInstance} factory method to
+ * Use the {@link FilterProductsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductDetailsFragment extends Fragment {
-    private FirebaseServices fbs;
-    private RatingBar rbProduct;
-    private RecyclerView rvPhotos;
-    private TextView tvTitle, tvDescription;
-    private ArrayList<Product> products;
-    private float starRating;
+public class FilterProductsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,7 +26,7 @@ public class ProductDetailsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProductDetailsFragment() {
+    public FilterProductsFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +36,11 @@ public class ProductDetailsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProductDetailsFragment.
+     * @return A new instance of fragment FilterProductsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductDetailsFragment newInstance(String param1, String param2) {
-        ProductDetailsFragment fragment = new ProductDetailsFragment();
+    public static FilterProductsFragment newInstance(String param1, String param2) {
+        FilterProductsFragment fragment = new FilterProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,21 +61,6 @@ public class ProductDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_details, container, false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        connectComponents();
-    }
-
-    private void connectComponents() {
-        fbs = FirebaseServices.getInstance();
-        products = new ArrayList<>();
-        starRating = 5;
-        rvPhotos = getView().findViewById(R.id.rvPhotosProductDetails);
-        tvTitle = getView().findViewById(R.id.tvTitleProItem);
-        tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
+        return inflater.inflate(R.layout.fragment_filter_products, container, false);
     }
 }

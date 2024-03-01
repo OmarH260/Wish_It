@@ -139,7 +139,7 @@ public class AddProductFragment extends Fragment {
                 }
 
                 // add data to firestore
-                Product product = new Product(tittle, description, price, fbs.getSelectedImageURL().toString(), 0);
+                Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0);
 
                 fbs.getFire().collection("product").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
