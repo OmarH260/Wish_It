@@ -14,6 +14,10 @@ import android.widget.TextView;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -29,7 +33,6 @@ public class ProductDetailsFragment extends Fragment {
     private TextView tvTitle, tvDescription;
     private ArrayList<Product> products;
     private float starRating;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,5 +93,7 @@ public class ProductDetailsFragment extends Fragment {
         rvPhotos = getView().findViewById(R.id.rvPhotosProductDetails);
         tvTitle = getView().findViewById(R.id.tvTitleProItem);
         tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
+        rbProduct.setRating(products.());
     }
+
 }

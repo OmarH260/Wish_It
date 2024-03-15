@@ -41,10 +41,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:numStars="5"
                 android:rating="4.5"
                 android:stepSize="0.5" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

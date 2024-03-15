@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Product implements Parcelable {
     private String photo;
@@ -13,6 +14,7 @@ public class Product implements Parcelable {
     private String description;
     private String price;
     private double rating;
+    private String productId = null;
 
     public Product() {
     }
@@ -23,6 +25,9 @@ public class Product implements Parcelable {
         this.description = description;
         this.price = price;
         this.rating = rating;
+        if(this.productId == null) {
+            this.productId = UUID.randomUUID().toString();
+        }
     }
 
 
@@ -82,6 +87,14 @@ public class Product implements Parcelable {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     @NonNull
