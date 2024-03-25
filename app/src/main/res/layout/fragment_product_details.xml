@@ -36,6 +36,12 @@
                 android:layout_height="wrap_content"
                 android:hint="Description" />
 
+            <TextView
+                android:id="@+id/tvPriceProductDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price" />
+
             <RatingBar
                 android:id="@+id/rbProductProductDetails"
                 android:layout_width="wrap_content"

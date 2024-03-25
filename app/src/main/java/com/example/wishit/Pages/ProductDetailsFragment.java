@@ -14,12 +14,7 @@ import android.widget.TextView;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,8 +25,8 @@ public class ProductDetailsFragment extends Fragment {
     private FirebaseServices fbs;
     private RatingBar rbProduct;
     private RecyclerView rvPhotos;
-    private TextView tvTitle, tvDescription;
-    private ArrayList<Product> products;
+    private TextView tvTitle, tvDescription, tvPrice;
+    private Product product;
     private float starRating;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,12 +83,24 @@ public class ProductDetailsFragment extends Fragment {
 
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
-        products = new ArrayList<>();
         starRating = 5;
         rvPhotos = getView().findViewById(R.id.rvPhotosProductDetails);
         tvTitle = getView().findViewById(R.id.tvTitleProItem);
-        tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
-        rbProduct.setRating(products.());
+        tvDescription = getView().findViewById(R.id.tvPriceProductDetails);
+        tvPrice = getView().findViewById(R.id.tvPriceProductDetails);
+
+        rbProduct = getView().findViewById(R.id.rbProductProductDetails);
+
+        Bundle args = getArguments();
+        if (args != null){
+            product = args.getParcelable("products");
+            if (product != null){
+                tvDescription.setText(product.getDescription());
+                tvPrice.setText(product.getPrice());
+                tvTitle.setText(product.getTittle());
+                //Have to add recycler view for photos
+            }
+        }
     }
 
 }
