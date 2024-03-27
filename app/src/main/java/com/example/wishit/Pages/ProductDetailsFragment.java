@@ -2,19 +2,30 @@ package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.wishit.Adapters.ProductAdapter;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,22 +96,21 @@ public class ProductDetailsFragment extends Fragment {
         fbs = FirebaseServices.getInstance();
         starRating = 5;
         rvPhotos = getView().findViewById(R.id.rvPhotosProductDetails);
-        tvTitle = getView().findViewById(R.id.tvTitleProItem);
-        tvDescription = getView().findViewById(R.id.tvPriceProductDetails);
+        tvTitle = getView().findViewById(R.id.tvTitleProductDetails);
+        tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
         tvPrice = getView().findViewById(R.id.tvPriceProductDetails);
-
         rbProduct = getView().findViewById(R.id.rbProductProductDetails);
 
         Bundle args = getArguments();
         if (args != null){
-            product = args.getParcelable("products");
+            product = args.getParcelable("product");
             if (product != null){
                 tvDescription.setText(product.getDescription());
                 tvPrice.setText(product.getPrice());
                 tvTitle.setText(product.getTittle());
+                rbProduct.setRating((float) product.getRating());
                 //Have to add recycler view for photos
             }
         }
     }
-
 }

@@ -103,9 +103,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() {
-        return productList.size();
-    }
+    public int getItemCount() { return productList.size(); }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvPrice, tvTittle, tvDescription;

@@ -162,6 +162,20 @@ public class HomeFragment extends Fragment {
                 Log.e("AllProductsFragment", e.getMessage());
             }
         });
+
+        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Handle item click here
+                Bundle args = new Bundle();
+                args.putParcelable("product", products.get(position)); // or use Parcelable for better performance
+                ProductDetailsFragment cd = new ProductDetailsFragment();
+                cd.setArguments(args);
+                FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frameLayoutMain,cd);
+                ft.commit();
+            }
+        });
     }
 
     //Designing
