@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
@@ -55,6 +60,7 @@ public class AddProductFragment extends Fragment {
     private Button btnAdd;
     private ArrayList<Product> products;
     private RatingBar rbProduct;
+    private ArrayList<Uri> photos;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -145,6 +151,10 @@ public class AddProductFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
+                        // gotoHomeFragment
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.frameLayoutMain,new HomeFragment());
+                            ft.commit();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -161,6 +171,7 @@ public class AddProductFragment extends Fragment {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -171,6 +182,23 @@ public class AddProductFragment extends Fragment {
             utils.uploadImage(getActivity(), selectedImageUri);
         }
     }
+    //
+    final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            if (o.getData() != null && o.getData().getClipData() != null){
+                int count = o.getData().getClipData().getItemCount();
+                for (int i = 0; i < count; i++){
+                    Uri imageUri = o.getData().getClipData().getItemAt(i).getUri();
+                    photos.add(imageUri);
+                }
+                if (photos.size() >= 1){
+                    btnAdd.setEnabled(true);
+                }
+            }
+        }
+    });
+    //
     public void calculateStarRating()
     {
         float sum = 0;
