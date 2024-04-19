@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,11 +29,18 @@ import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.R;
 import com.example.wishit.Utilities.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +68,9 @@ public class AddProductFragment extends Fragment {
     private Button btnAdd;
     private ArrayList<Product> products;
     private RatingBar rbProduct;
+    private CardView cvAddPhotos;
     private ArrayList<Uri> photos;
+    private ImageView image;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -91,7 +101,22 @@ public class AddProductFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        FirebaseApp.initializeApp(getActivity());
+        photos = new ArrayList<>();
+
+        cvAddPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                activityResultLauncher.launch(intent);
+            }
+        });
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -118,11 +143,20 @@ public class AddProductFragment extends Fragment {
         ivShow = getView().findViewById(R.id.ivShowAddProduct);
         btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
         rbProduct = getView().findViewById(R.id.rbProductProductDetails);
+        cvAddPhotos = getView().findViewById(R.id.cvAddPhotosAddProduct);
+        image = getView().findViewById(R.id.image);
 
         ivShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
+            }
+        });
+
+        cvAddPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -166,7 +200,42 @@ public class AddProductFragment extends Fragment {
 
             }
         });
+        btnAdd.setText("Uploading ...");
+        btnAdd.setEnabled(false);
+
+        uploadImages(new ArrayList<>());
     }
+
+    private void uploadImages(ArrayList<String> imagesUriList) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images").child(UUID.randomUUID().toString());
+        Uri uri = photos.get(imagesUriList.size());
+        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        String url = task.getResult().toString();
+                        imagesUriList.add(url);
+
+                        if (photos.size() == imagesUriList.size()){
+                            Toast.makeText(getActivity(), "Images uploaded successfully", Toast.LENGTH_SHORT).show();
+                            btnAdd.setText("Add");
+                            btnAdd.setEnabled(true);
+                        } else {
+                            uploadImages(imagesUriList);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Failed to upload Images", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
