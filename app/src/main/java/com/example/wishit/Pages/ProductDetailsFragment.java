@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 public class ProductDetailsFragment extends Fragment {
     private FirebaseServices fbs;
     private RatingBar rbProduct;
-    private RecyclerView rvPhotos;
+    private ImageView ivPhoto;
     private TextView tvTitle, tvDescription, tvPrice;
     private Product product;
     private float starRating;
@@ -95,7 +96,7 @@ public class ProductDetailsFragment extends Fragment {
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
         starRating = 5;
-        rvPhotos = getView().findViewById(R.id.rvPhotosProductDetails);
+        ivPhoto = getView().findViewById(R.id.ivPhotoProductDetails);
         tvTitle = getView().findViewById(R.id.tvTitleProductDetails);
         tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
         tvPrice = getView().findViewById(R.id.tvPriceProductDetails);
@@ -109,6 +110,13 @@ public class ProductDetailsFragment extends Fragment {
                 tvPrice.setText(product.getPrice());
                 tvTitle.setText(product.getTittle());
                 rbProduct.setRating((float) product.getRating());
+                if (product.getPhoto() == null || product.getPhoto().isEmpty())
+                {
+                    Picasso.get().load(R.drawable.ic_menu_gallery).into(ivPhoto);
+                }
+                else {
+                    Picasso.get().load(product.getPhoto()).into(ivPhoto);
+                }
                 //Have to add recycler view for photos
             }
         }

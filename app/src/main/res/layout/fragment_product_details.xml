@@ -12,62 +12,58 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPhotosProductDetails"
+        <ImageView
+            android:id="@+id/ivPhotoProductDetails"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="wrap_content"
+            tools:src="@tools:sample/avatars" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvTitleProductDetails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvTitleProductDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDescriptionProductDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description" />
 
-            <TextView
-                android:id="@+id/tvDescriptionProductDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Description" />
+        <TextView
+            android:id="@+id/tvPriceProductDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price" />
 
-            <TextView
-                android:id="@+id/tvPriceProductDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Price" />
+        <RatingBar
+            android:id="@+id/rbProductProductDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:clickable="false"
+            android:contextClickable="false"
+            android:fadeScrollbars="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:isIndicator="true"
+            android:longClickable="false"
+            android:numStars="5"
+            android:progressBackgroundTint="#E6E6E6"
+            android:progressTint="#22BE73"
+            android:rating="4.5"
+            android:stepSize="0.5" />
 
-            <RatingBar
-                android:id="@+id/rbProductProductDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:clickable="false"
-                android:focusableInTouchMode="false"
-                android:focusable="false"
-                android:contextClickable="false"
-                android:isIndicator="true"
-                android:fadeScrollbars="false"
-                android:longClickable="false"
-                android:numStars="5"
-                android:progressBackgroundTint="#E6E6E6"
-                android:progressTint="#22BE73"
-                android:rating="4.5"
-                android:stepSize="0.5" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Button" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="122dp"
-                android:layout_height="wrap_content"
-                android:text="Button"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
