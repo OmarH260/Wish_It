@@ -3,12 +3,18 @@ package com.example.wishit.Pages;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.wishit.AddDataFire.Card;
+import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +22,10 @@ import com.example.wishit.R;
  * create an instance of this fragment.
  */
 public class FilterProductsFragment extends Fragment {
+    private TextView tvTittle;
+    private RecyclerView rvProducts;
+    private FirebaseServices fbs;
+    private Card card;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +72,25 @@ public class FilterProductsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_filter_products, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        connectComponents();
+    }
+
+    private void connectComponents() {
+        fbs = FirebaseServices.getInstance();
+        tvTittle = getView().findViewById(R.id.tvTypeNameFilterProducts);
+        rvProducts = getView().findViewById(R.id.rvProductsFilterProducts);
+
+        Bundle args = getArguments();
+        if (args != null){
+            card = args.getParcelable("Type/Cards");
+            if (card != null){
+                tvTittle.setText(card.getTitle());
+            }
+        }
     }
 }

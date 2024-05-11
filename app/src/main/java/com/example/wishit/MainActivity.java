@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.Pages.AddCardFragment;
-import com.example.wishit.Pages.AllProductsFragment;
 import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.Pages.LoginFragment;
 
@@ -24,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         //if (fbs.getAuth().getCurrentUser() == null)
           //  gotoLoginFragment();
           gotoHomeFragment();
-        //gotoAllProductsFragment();
 
+        //gotoAddCardFragment();
     }
 
     private void gotoHomeFragment() {
@@ -40,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    private void gotoAllProductsFragment(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AllProductsFragment());
-        ft.commit();
-    }
 
     private void gotoAddCardFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

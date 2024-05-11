@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.wishit.AddDataFire.Card;
@@ -36,10 +39,11 @@ public class AddCardFragment extends Fragment {
     private static final int GALLERY_REQUEST_CODE = 123;
     private FirebaseServices fbs;
     private RecyclerView rvCards;
-    private EditText etTitle;
+    private Spinner spType;
     private ImageView ivPhoto;
     private Utils utils;
     private Button btnAdd;
+    String[] cardName = {"Select the product type ...", "Logo", "Web design", "3D design", "Video edit", "Montage"};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,10 +100,25 @@ public class AddCardFragment extends Fragment {
 
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
-        etTitle = getView().findViewById(R.id.etTitleAddCard);
+        spType = getView().findViewById(R.id.spProductTypeAddCard);
         utils = Utils.getInstance();
         ivPhoto = getView().findViewById(R.id.ivPhotoAddCard);
         btnAdd = getView().findViewById(R.id.btnAddAddCard);
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,cardName);
+        spType.setAdapter(adapter);
+        spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String type = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getActivity(), type, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +132,10 @@ public class AddCardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // get data from screen
-                String title = etTitle.getText().toString();
+                String title = spType.getSelectedItem().toString();
                 // data validation
-                if (title.trim().isEmpty())
+                if (spType.getSelectedItem().toString().equals("Select the product type ...")
+                        || fbs.getSelectedImageURL().toString().isEmpty())
                 {
                     Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_LONG).show();
                     return;

@@ -14,17 +14,19 @@ public class Product implements Parcelable {
     private String description;
     private String price;
     private double rating;
+    private String type;
     private String productId = null;
 
     public Product() {
     }
 
-    public Product(String photo, String tittle, String description, String price, double rating) {
+    public Product(String photo, String tittle, String description, String price, double rating, String type) {
         this.photo = photo;
         this.tittle = tittle;
         this.description = description;
         this.price = price;
         this.rating = rating;
+        this.type = type;
         if(this.productId == null) {
             this.productId = UUID.randomUUID().toString();
         }

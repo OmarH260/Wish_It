@@ -19,10 +19,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.wishit.AddDataFire.Product;
@@ -67,10 +70,12 @@ public class AddProductFragment extends Fragment {
     private Utils utils;
     private Button btnAdd;
     private ArrayList<Product> products;
-    private RatingBar rbProduct;
-    private CardView cvAddPhotos;
     private ArrayList<Uri> photos;
+    private RatingBar rbProduct;
     private ImageView image;
+    private Spinner spType;
+
+    String[] productType = {"Select the product type ...", "Logo", "Web design", "3D design", "Video edit", "Montage"};
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -104,17 +109,6 @@ public class AddProductFragment extends Fragment {
 
         FirebaseApp.initializeApp(getActivity());
         photos = new ArrayList<>();
-
-        cvAddPhotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                activityResultLauncher.launch(intent);
-            }
-        });
     }
 
 
@@ -143,20 +137,27 @@ public class AddProductFragment extends Fragment {
         ivShow = getView().findViewById(R.id.ivShowAddProduct);
         btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
         rbProduct = getView().findViewById(R.id.rbProductProductDetails);
-        cvAddPhotos = getView().findViewById(R.id.cvAddPhotosAddProduct);
-        image = getView().findViewById(R.id.image);
+        spType = getView().findViewById(R.id.spProductTypeAddProduct);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,productType);
+        spType.setAdapter(adapter);
+        spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String type = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getActivity(), type, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         ivShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
-            }
-        });
-
-        cvAddPhotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
@@ -168,20 +169,27 @@ public class AddProductFragment extends Fragment {
                 String tittle = etTittle.getText().toString();
                 String description = etDescription.getText().toString();
                 String price = etPrice.getText().toString();
+                String type = spType.getSelectedItem().toString();
+                btnAdd.setText("Uploading ...");
+                btnAdd.setEnabled(false);
                 //RatingBar productRatingBar = getView().findViewById(R.id.rbProductProductDetails);
                 float rating = 0;//productRatingBar.getRating();
                 // data validation
-                if (tittle.trim().isEmpty() || description.trim().isEmpty() ||
-                        price.trim().isEmpty())
+                if (tittle.trim().isEmpty()
+                        || description.trim().isEmpty()
+                        || price.trim().isEmpty()
+                        || spType.getSelectedItem().toString().equals("Select the product type ..."))
                 {
                     Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_LONG).show();
+                    btnAdd.setText("Add");
+                    btnAdd.setEnabled(true);
                     return;
                 }
 
                 // add data to firestore
-                Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0);
+                Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0,type);
 
-                fbs.getFire().collection("product").add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                fbs.getFire().collection("Type/Products/" + spType.getSelectedItem().toString()).add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
@@ -197,44 +205,20 @@ public class AddProductFragment extends Fragment {
                     }
                 });
 
-
-            }
-        });
-        btnAdd.setText("Uploading ...");
-        btnAdd.setEnabled(false);
-
-        uploadImages(new ArrayList<>());
-    }
-
-    private void uploadImages(ArrayList<String> imagesUriList) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images").child(UUID.randomUUID().toString());
-        Uri uri = photos.get(imagesUriList.size());
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        String url = task.getResult().toString();
-                        imagesUriList.add(url);
-
-                        if (photos.size() == imagesUriList.size()){
-                            Toast.makeText(getActivity(), "Images uploaded successfully", Toast.LENGTH_SHORT).show();
-                            btnAdd.setText("Add");
-                            btnAdd.setEnabled(true);
-                        } else {
-                            uploadImages(imagesUriList);
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                fbs.getFire().collection("product").add(product).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed to upload Images", Toast.LENGTH_SHORT).show();
+                        Log.e("Failure AddProduct: ", e.getMessage());
                     }
                 });
+
+
             }
         });
+        btnAdd.setText("Add");
+        btnAdd.setEnabled(true);
     }
+
 
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

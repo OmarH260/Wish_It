@@ -11,6 +11,37 @@
         android:layout_height="match_parent"
         android:background="#ffff">
 
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="420dp"
+            android:layout_height="561dp"
+            android:layout_marginTop="23dp"
+            android:fadeScrollbars="true"
+            android:isScrollContainer="true"
+            android:overScrollMode="ifContentScrolls"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogoHome">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCardsHome"
+                    android:layout_width="411dp"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductsHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </ScrollView>
+
         <Button
             android:id="@+id/btnAddCardHome"
             android:layout_width="0dp"
@@ -108,37 +139,6 @@
             android:src="@drawable/manageorders"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSearchHome" />
-
-        <ScrollView
-            android:id="@+id/scrollView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:fadeScrollbars="true"
-            android:isScrollContainer="true"
-            android:overScrollMode="ifContentScrolls"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogoHome">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCardsHome"
-                    android:layout_width="411dp"
-                    android:layout_height="wrap_content">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvProductsHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

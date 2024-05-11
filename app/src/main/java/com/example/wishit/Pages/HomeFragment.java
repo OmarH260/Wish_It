@@ -229,11 +229,6 @@ public class HomeFragment extends Fragment {
         });
 
     }
-    private void gotoAllProductsFragment(){
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new AllProductsFragment());
-        ft.commit();
-    }
 
     private void gotoAddProductsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
