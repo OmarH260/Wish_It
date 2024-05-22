@@ -144,7 +144,7 @@ public class AddCardFragment extends Fragment {
                 // add data to firestore
                 Card card = new Card(fbs.getSelectedImageURL().toString(), title);
 
-                fbs.getFire().collection("Cards").add(card).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                fbs.getFire().collection("Type/Cards/All cards").add(card).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();

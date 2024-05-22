@@ -197,6 +197,14 @@ public class AddProductFragment extends Fragment {
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.frameLayoutMain,new HomeFragment());
                             ft.commit();
+
+
+                        fbs.getFire().collection("product").add(product).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("Failure AddProduct: ", e.getMessage());
+                            }
+                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

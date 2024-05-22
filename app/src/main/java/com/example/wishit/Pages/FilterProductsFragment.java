@@ -2,19 +2,31 @@ package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.wishit.Adapters.ProductAdapter;
 import com.example.wishit.AddDataFire.Card;
 import com.example.wishit.AddDataFire.FirebaseServices;
 import com.example.wishit.AddDataFire.Product;
 import com.example.wishit.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +38,9 @@ public class FilterProductsFragment extends Fragment {
     private RecyclerView rvProducts;
     private FirebaseServices fbs;
     private Card card;
+    private ArrayList<Product> products;
+    private ProductAdapter productAdapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,6 +93,48 @@ public class FilterProductsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         connectComponents();
+        setupProductAdapter();
+    }
+
+    private void setupProductAdapter() {
+        fbs = FirebaseServices.getInstance();
+        products = new ArrayList<>();
+        rvProducts = getView().findViewById(R.id.rvProductsFilterProducts);
+        productAdapter = new ProductAdapter(getActivity(), products);
+        rvProducts.setAdapter(productAdapter);
+        rvProducts.setHasFixedSize(true);
+        rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fbs.getFire().collection("Type/Products/" + tvTittle.toString()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
+                    Product product = dataSnapshot.toObject(Product.class);
+
+                    products.add(product);
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
+                Log.e("AllProductsFragment", e.getMessage());
+            }
+        });
+
+        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Handle item click here
+                Bundle args = new Bundle();
+                args.putParcelable("product", products.get(position)); // or use Parcelable for better performance
+                ProductDetailsFragment cd = new ProductDetailsFragment();
+                cd.setArguments(args);
+                FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frameLayoutMain,cd);
+                ft.commit();
+            }
+        });
     }
 
     private void connectComponents() {
@@ -86,11 +143,11 @@ public class FilterProductsFragment extends Fragment {
         rvProducts = getView().findViewById(R.id.rvProductsFilterProducts);
 
         Bundle args = getArguments();
-        if (args != null){
-            card = args.getParcelable("Type/Cards");
-            if (card != null){
-                tvTittle.setText(card.getTitle());
+         if (args != null){
+              card = args.getParcelable("Cards");
+                if (card != null){
+                    tvTittle.setText(card.getTitle());
+                }
             }
         }
     }
-}
