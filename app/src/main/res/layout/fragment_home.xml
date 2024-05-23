@@ -11,10 +11,21 @@
         android:layout_height="match_parent"
         android:background="#ffff">
 
+        <Button
+            android:id="@+id/btnAddCardHome"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="18dp"
+            android:text="Add Card"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="270dp"
+            tools:visibility="gone" />
+
         <ScrollView
             android:id="@+id/scrollView3"
-            android:layout_width="420dp"
-            android:layout_height="561dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
             android:fadeScrollbars="true"
             android:isScrollContainer="true"
@@ -37,21 +48,12 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProductsHome"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="369dp"
+                    android:verticalScrollbarPosition="defaultPosition"
+                    app:fastScrollEnabled="false" />
 
             </LinearLayout>
         </ScrollView>
-
-        <Button
-            android:id="@+id/btnAddCardHome"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="18dp"
-            android:text="Add Card"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="270dp"
-            tools:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btnLogoHome"
@@ -144,5 +146,148 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 
-<!--
--->
+    <!--<?xml version="1.0" encoding="utf-8"?>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Pages.HomeFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffff">
+
+            <ScrollView
+                android:id="@+id/scrollView3"
+                android:layout_width="420dp"
+                android:layout_height="561dp"
+                android:layout_marginTop="23dp"
+                android:fadeScrollbars="true"
+                android:isScrollContainer="true"
+                android:overScrollMode="ifContentScrolls"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnLogoHome">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCardsHome"
+                        android:layout_width="411dp"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvProductsHome"
+                        android:layout_width="410dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </ScrollView>
+
+            <Button
+                android:id="@+id/btnAddCardHome"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="18dp"
+                android:text="Add Card"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="270dp"
+                tools:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/btnLogoHome"
+                android:layout_width="222dp"
+                android:layout_height="68dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="100dp"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/wish_it_250"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/verticalLine"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10.2dp"
+                android:background="#969FAA"
+                app:layout_constraintBottom_toTopOf="@+id/btnHomeHome"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:id="@+id/whiteBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_marginTop="1dp"
+                android:background="#ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/verticalLine"
+                app:layout_constraintTop_toBottomOf="@+id/verticalLine" />
+
+            <ImageButton
+                android:id="@+id/btnHomeHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/homegreen"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnSearchHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.276"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnAddHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="21dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#0046D08D"
+                android:src="@drawable/baseline_add_32"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnOrdersHome" />
+
+            <ImageButton
+                android:id="@+id/btnAccountHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/account"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnOrdersHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/manageorders"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnSearchHome" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>-->

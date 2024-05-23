@@ -104,7 +104,7 @@ public class FilterProductsFragment extends Fragment {
         rvProducts.setAdapter(productAdapter);
         rvProducts.setHasFixedSize(true);
         rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fbs.getFire().collection("Type/Products/" + tvTittle.toString()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fbs.getFire().collection("Type").document("Products").collection(tvTittle.getText().toString()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){

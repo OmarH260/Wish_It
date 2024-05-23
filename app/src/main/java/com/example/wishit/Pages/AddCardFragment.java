@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
@@ -174,4 +175,12 @@ public class AddCardFragment extends Fragment {
             utils.uploadImage(getActivity(), selectedImageUri);
         }
     }
+    private void gotoHomeFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain,new HomeFragment());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
 }
+
+
