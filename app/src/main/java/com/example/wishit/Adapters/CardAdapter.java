@@ -47,6 +47,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
                 cd.setArguments(args);
                 FragmentTransaction ft= ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frameLayoutMain,cd);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         };

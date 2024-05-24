@@ -74,6 +74,7 @@ public class AddProductFragment extends Fragment {
     private RatingBar rbProduct;
     private ImageView image;
     private Spinner spType;
+    private long cat;
 
     String[] productType = {"Select the product type ...", "Logo", "Web design", "3D design", "Video edit", "Montage"};
 
@@ -187,6 +188,13 @@ public class AddProductFragment extends Fragment {
                 }
 
                 // add data to firestore
+                if (fbs.getSelectedImageURL() != null) {
+                    Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0,type);
+                }
+                else
+                {
+                    Product product = new Product("".toString(), tittle, description, price, 0,type);
+                }
                 Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0,type);
 
                 fbs.getFire().collection("Type/Products/" + spType.getSelectedItem().toString()).add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -202,7 +210,7 @@ public class AddProductFragment extends Fragment {
                         fbs.getFire().collection("product").add(product).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.e("Failure AddProduct: ", e.getMessage());
+                                Log.e("Failure AddProduc    t: ", e.getMessage());
                             }
                         });
                     }
@@ -270,5 +278,22 @@ public class AddProductFragment extends Fragment {
 
         starRating = sum / products.size();
         rbProduct.setRating(starRating);
+    }
+    private void gotoHomeFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain,new HomeFragment());
+        ft.commit();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        cat = spType.getSelectedItemId();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        spType.setSelection((int)cat, true);
     }
 }

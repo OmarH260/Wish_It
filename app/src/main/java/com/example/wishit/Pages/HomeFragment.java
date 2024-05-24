@@ -233,12 +233,14 @@ public class HomeFragment extends Fragment {
     private void gotoAddProductsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new AddProductFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 
     private void gotoAddCardsFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new AddCardFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 }

@@ -132,6 +132,7 @@ public class FilterProductsFragment extends Fragment {
                 cd.setArguments(args);
                 FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frameLayoutMain,cd);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });

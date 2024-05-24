@@ -117,6 +117,7 @@ public class ForgotFragment extends Fragment {
     private void gotoLoginFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new LoginFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 }
