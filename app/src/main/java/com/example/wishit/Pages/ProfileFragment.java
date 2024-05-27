@@ -2,32 +2,27 @@ package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ForgotFragment#newInstance} factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ForgotFragment extends Fragment {
+public class ProfileFragment extends Fragment {
+    TextView tvName, tvPhone, tvSignOut, tvEdit;
     FirebaseServices fbs;
-    EditText etEmail;
-    Button btnSend;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +33,7 @@ public class ForgotFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ForgotFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +43,11 @@ public class ForgotFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ForgotFragment.
+     * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ForgotFragment newInstance(String param1, String param2) {
-        ForgotFragment fragment = new ForgotFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,44 +68,56 @@ public class ForgotFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        connectComponents();
-    }
-
-    private void connectComponents(){
+        tvName = getView().findViewById(R.id.tvNameProfile);
+        tvPhone = getView().findViewById(R.id.tvPhoneProfile);
+        tvSignOut = getView().findViewById(R.id.tvSignOutProfile);
+        tvEdit = getView().findViewById(R.id.tvEditProfile);
         fbs = FirebaseServices.getInstance();
-        etEmail = getView().findViewById(R.id.etEmailForgot);
-        btnSend = getView().findViewById(R.id.btnSendForgot);
 
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String email = etEmail.getText().toString();
-                fbs.getAuth().sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(getActivity(), "We have send you an email to reset your password", Toast.LENGTH_SHORT).show();
-                        gotoLoginFragment();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "The email you entered does not exist!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onClick(View v) {
+                gotoEditFragment();
+            }
+        });
+        tvSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fbs.getAuth().signOut();
+                Toast.makeText(getActivity(), "Successfully Signed Out", Toast.LENGTH_SHORT).show();
+                gotoLoginFragment();
             }
         });
     }
-    private void gotoLoginFragment(){
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+    private void gotoLoginFragment() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        // 1. Pop all existing fragments from the back stack
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        // 2. Start a new FragmentTransaction
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        // 3. Replace the content of the FrameLayoutMain with LoginFragment
         ft.replace(R.id.frameLayoutMain, new LoginFragment());
+
+        // 4. Commit the transaction
+        ft.commit();
+    }
+
+    private void gotoEditFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new EditFragment());
         ft.addToBackStack(null);
         ft.commit();
     }
+
+
 }

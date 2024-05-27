@@ -2,7 +2,6 @@ package com.example.wishit.Pages;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -11,23 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ForgotFragment#newInstance} factory method to
+ * Use the {@link EditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ForgotFragment extends Fragment {
+public class EditFragment extends Fragment {
+    EditText etLastName, etFirstName, etPhone;
+    TextView tvChangePassword;
+    Button btnSave;
     FirebaseServices fbs;
-    EditText etEmail;
-    Button btnSend;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +35,7 @@ public class ForgotFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ForgotFragment() {
+    public EditFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +45,11 @@ public class ForgotFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ForgotFragment.
+     * @return A new instance of fragment EditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ForgotFragment newInstance(String param1, String param2) {
-        ForgotFragment fragment = new ForgotFragment();
+    public static EditFragment newInstance(String param1, String param2) {
+        EditFragment fragment = new EditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,43 +70,34 @@ public class ForgotFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot, container, false);
+        return inflater.inflate(R.layout.fragment_edit, container, false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        connectComponents();
-    }
-
-    private void connectComponents(){
+        etLastName = getView().findViewById(R.id.etLastNameEdit);
+        etFirstName = getView().findViewById(R.id.etFirstNameEdit);
+        etPhone = getView().findViewById(R.id.etPhoneEdit);
+        tvChangePassword = getView().findViewById(R.id.tvChangePasswordEdit);
+        btnSave = getView().findViewById(R.id.btnSaveEdit);
         fbs = FirebaseServices.getInstance();
-        etEmail = getView().findViewById(R.id.etEmailForgot);
-        btnSend = getView().findViewById(R.id.btnSendForgot);
 
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        etFirstName.setText("William");
+        etPhone.setText("09123456789");
+        tvChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String email = etEmail.getText().toString();
-                fbs.getAuth().sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(getActivity(), "We have send you an email to reset your password", Toast.LENGTH_SHORT).show();
-                        gotoLoginFragment();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "The email you entered does not exist!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onClick(View v) {
+                gotoForgotPassword();
             }
         });
+
     }
-    private void gotoLoginFragment(){
+
+    private void gotoForgotPassword() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new LoginFragment());
+        ft.replace(R.id.frameLayoutMain, new ForgotFragment());
         ft.addToBackStack(null);
         ft.commit();
     }

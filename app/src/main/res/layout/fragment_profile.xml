@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Pages.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:background="@color/theme_color"
+            android:backgroundTint="@color/theme_color" />
+
+        <TextView
+            android:id="@+id/tvNameProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="158dp" />
+
+        <TextView
+            android:id="@+id/tvPhoneProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="270dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Us:+972 502179145"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="53dp"
+            tools:layout_editor_absoluteY="396dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="omarham206@gmail.com"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="428dp" />
+
+        <TextView
+            android:id="@+id/tvSignOutProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"
+            android:textColor="#F40303"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="784dp" />
+
+        <TextView
+            android:id="@+id/tvEditProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="368dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

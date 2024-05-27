@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wishit.AddDataFire.Card;
-import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Data.Card;
+import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.MainActivity;
 import com.example.wishit.Pages.FilterProductsFragment;
-import com.example.wishit.Pages.ProductDetailsFragment;
 import com.example.wishit.R;
 import com.squareup.picasso.Picasso;
 

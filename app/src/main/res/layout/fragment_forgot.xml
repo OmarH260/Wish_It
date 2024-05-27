@@ -12,10 +12,10 @@
 
         <Button
             android:id="@+id/btnSendForgot"
-            android:layout_width="230dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="96dp"
-            android:layout_marginBottom="466dp"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="84dp"
+            android:layout_marginBottom="480dp"
             android:backgroundTint="#22BE73"
             android:text="Send"
             app:cornerRadius="5dp"
@@ -25,29 +25,18 @@
 
         <EditText
             android:id="@+id/etEmailForgot"
-            android:layout_width="245dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="150dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="220dp"
             android:background="#E3E3E3"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toTopOf="@+id/btnSendForgot"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btnBackSignup"
-            android:layout_width="70dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/arrow_back"
-            android:tint="#555555"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

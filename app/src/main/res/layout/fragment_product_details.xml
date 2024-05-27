@@ -59,7 +59,7 @@
             android:stepSize="0.5" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnBuyProductDetails"
             android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

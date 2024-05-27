@@ -15,11 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.wishit.AddDataFire.Card;
-import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.AddDataFire.Product;
+import com.example.wishit.Data.Card;
+import com.example.wishit.Data.FirebaseServices;
+import com.example.wishit.Data.Product;
 import com.example.wishit.R;
 import com.example.wishit.Adapters.CardAdapter;
 import com.example.wishit.Adapters.ProductAdapter;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
     CardAdapter cardAdapter;
     ProductAdapter productAdapter;
     ImageButton btnLogoHome, btnAdd;
+    ImageView ivProfile;
     Button  btnAddCard;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -159,7 +161,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                Log.e("AllProductsFragment", e.getMessage());
+                Log.e("HomeFragment", e.getMessage());
             }
         });
 
@@ -203,9 +205,17 @@ public class HomeFragment extends Fragment {
 
 
     private void connectComponents() {
-        btnAdd = getView().findViewById(R.id.btnAddHome);
+        //btnAdd = getView().findViewById(R.id.btnAddHome);
         btnAddCard = getView().findViewById(R.id.btnAddCardHome);
         btnLogoHome = getView().findViewById(R.id.btnLogoHome);
+        ivProfile = getView().findViewById(R.id.ivProfileHome);
+
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoProfileFragment();
+            }
+        });
 
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,13 +231,26 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoAddProductsFragment();
-            }
-        });
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+  //          @Override
+    //        public void onClick(View v) {
+      //          gotoAddProductsFragment();
+        //    }
+        //});
 
+    }
+
+    private void gotoProfileFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new ProfileFragment());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    private void gotoLoginFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new LoginFragment());
+        ft.commit();
     }
 
     private void gotoAddProductsFragment(){

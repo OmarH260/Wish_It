@@ -1,24 +1,36 @@
 package com.example.wishit.Pages;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Data.FirebaseServices;
+import com.example.wishit.Data.User;
 import com.example.wishit.R;
+import com.example.wishit.Utilities.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,10 +38,13 @@ import com.google.firebase.auth.AuthResult;
  * create an instance of this fragment.
  */
 public class SignupFragment extends Fragment {
+    private ArrayList<Uri> photos;
+    private static final int GALLERY_REQUEST_CODE = 123;
     FirebaseServices fbs;
-    EditText etPassword, etEmail;
+    EditText etPassword, etEmail, etFirstName, etLastName, etPhoneNumber;
     Button btnSignup;
-    ImageButton btnBack;
+    Utils utils;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,23 +104,24 @@ public class SignupFragment extends Fragment {
         fbs = FirebaseServices.getInstance();
         etPassword = getView().findViewById(R.id.etPasswordSignup);
         etEmail = getView().findViewById(R.id.etEmailSignup);
-        btnBack = getView().findViewById(R.id.btnBackSignup);
+        etFirstName = getView().findViewById(R.id.etFirstNameSignup);
+        etLastName = getView().findViewById(R.id.etLastNameSignup);
+        etPhoneNumber = getView().findViewById(R.id.etPhoneNumberSignup);
         btnSignup = getView().findViewById(R.id.btnSignupSignup);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoLoginFragment();
-            }
-        });
-
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
+                String firstName = etFirstName.getText().toString();
+                String lastName = etLastName.getText().toString();
+                String phoneNumber = etPhoneNumber.getText().toString();
                 //data validation
-                if (email.trim().isEmpty() && password.trim().isEmpty()){
+                if (email.trim().isEmpty()
+                        || firstName.trim().isEmpty()
+                        || lastName.trim().isEmpty()
+                        || phoneNumber.trim().isEmpty()
+                        || password.trim().isEmpty()){
                     Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -116,6 +132,7 @@ public class SignupFragment extends Fragment {
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getActivity(), "Succeeded", Toast.LENGTH_SHORT).show();
                         gotoLoginFragment();
+                        User user = new User(firstName, lastName, phoneNumber);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -135,5 +152,19 @@ public class SignupFragment extends Fragment {
         ft.replace(R.id.frameLayoutMain, new LoginFragment());
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == getActivity().RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            utils.uploadImage(getActivity(), selectedImageUri);
+        }
     }
 }

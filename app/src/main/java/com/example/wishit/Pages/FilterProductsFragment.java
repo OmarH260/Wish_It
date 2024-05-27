@@ -16,15 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishit.Adapters.ProductAdapter;
-import com.example.wishit.AddDataFire.Card;
-import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.AddDataFire.Product;
+import com.example.wishit.Data.Card;
+import com.example.wishit.Data.FirebaseServices;
+import com.example.wishit.Data.Product;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

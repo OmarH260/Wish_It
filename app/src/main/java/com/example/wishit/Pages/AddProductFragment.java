@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,22 +27,16 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.wishit.AddDataFire.Product;
-import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Data.Product;
+import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.R;
 import com.example.wishit.Utilities.Utils;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +57,6 @@ public class AddProductFragment extends Fragment {
     private float starRating;
     private static final int GALLERY_REQUEST_CODE = 123;
     private FirebaseServices fbs;
-    private RecyclerView rvProducts;
     private EditText etTittle, etDescription, etPrice;
     private ImageView ivShow;
     private Utils utils;
@@ -134,7 +126,6 @@ public class AddProductFragment extends Fragment {
         utils = Utils.getInstance();
         etDescription = getView().findViewById(R.id.etDescAddProductFragment);
         etPrice = getView().findViewById(R.id.etPriceAddProductFragment);
-        rvProducts = getView().findViewById(R.id.rvProductsProFragment);
         ivShow = getView().findViewById(R.id.ivShowAddProduct);
         btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
         rbProduct = getView().findViewById(R.id.rbProductProductDetails);
@@ -188,14 +179,10 @@ public class AddProductFragment extends Fragment {
                 }
 
                 // add data to firestore
-                if (fbs.getSelectedImageURL() != null) {
-                    Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0,type);
-                }
-                else
-                {
-                    Product product = new Product("".toString(), tittle, description, price, 0,type);
-                }
                 Product product = new Product(fbs.getSelectedImageURL().toString(), tittle, description, price, 0,type);
+                if (fbs.getSelectedImageURL() == null) {
+                    product.setPhoto("");
+                }
 
                 fbs.getFire().collection("Type/Products/" + spType.getSelectedItem().toString()).add(product).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

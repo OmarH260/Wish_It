@@ -1,4 +1,4 @@
-package com.example.wishit.AddDataFire;
+package com.example.wishit.Data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Data.FirebaseServices;
+import com.example.wishit.Data.User;
 import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +27,7 @@ import com.google.firebase.auth.AuthResult;
  */
 public class LoginFragment extends Fragment {
     FirebaseServices fbs;
-    Button btnLogin, btnSignup, btnForgot;
+    Button btnLogin, btnSignup, btnForgot, btnGuest;
     EditText etEmail, etPassword;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,6 +91,26 @@ public class LoginFragment extends Fragment {
         btnForgot = getView().findViewById(R.id.btnForgotLogin);
         btnLogin = getView().findViewById(R.id.btnLoginLogin);
         btnSignup = getView().findViewById(R.id.btnSignupLogin);
+        btnGuest = getView().findViewById(R.id.btnGuestLogin);
+
+        btnGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fbs.getAuth().signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        gotoHomeFragment();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Failed to login", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                User user = new User(true);
+
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,12 +156,14 @@ public class LoginFragment extends Fragment {
     private void gotoSignupFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new SignupFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 
     private void gotoForgotFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new ForgotFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 

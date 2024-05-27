@@ -17,14 +17,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.wishit.AddDataFire.Card;
-import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.AddDataFire.Product;
+import com.example.wishit.Data.Card;
+import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.R;
 import com.example.wishit.Utilities.Utils;
 import com.google.android.gms.tasks.OnFailureListener;

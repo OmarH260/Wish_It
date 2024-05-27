@@ -4,16 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.widget.Button;
 
-import com.example.wishit.AddDataFire.FirebaseServices;
+import com.example.wishit.Data.FirebaseServices;
+import com.example.wishit.Data.User;
 import com.example.wishit.Pages.AddCardFragment;
 import com.example.wishit.Pages.AddProductFragment;
 import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.Pages.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,9 +21,12 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseServices fbs = FirebaseServices.getInstance();
 
-        //if (fbs.getAuth().getCurrentUser() == null)
-          //  gotoLoginFragment();
-          gotoHomeFragment();
+        if(fbs.getAuth().getCurrentUser()==null){
+            gotoLoginFragment();
+        }
+        else {
+            gotoHomeFragment();
+        }
 
         //gotoAddCardFragment();
         //gotoAddProductFragment();

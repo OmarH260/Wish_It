@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wishit.AddDataFire.FirebaseServices;
-import com.example.wishit.AddDataFire.Product;
+import com.example.wishit.Data.FirebaseServices;
+import com.example.wishit.Data.Product;
 import com.example.wishit.MainActivity;
 import com.example.wishit.Pages.ProductDetailsFragment;
 import com.example.wishit.R;
@@ -42,11 +42,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 String selectedItem = filteredList.get(position).getNameCar();
                 Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show(); */
                 Bundle args = new Bundle();
-                args.putParcelable("car", productList.get(position)); // or use Parcelable for better performance
+                args.putParcelable("product", productList.get(position)); // or use Parcelable for better performance
                 ProductDetailsFragment cd = new ProductDetailsFragment();
                 cd.setArguments(args);
                 FragmentTransaction ft= ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frameLayoutMain,cd);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         } ;
