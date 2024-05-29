@@ -12,10 +12,9 @@
 
         <EditText
             android:id="@+id/etFirstNameSignup"
-            android:layout_width="122dp"
+            android:layout_width="115dp"
             android:layout_height="50dp"
             android:layout_marginStart="80dp"
-            android:layout_marginEnd="6dp"
             android:background="#E3E3E3"
             android:ems="10"
             android:hint="First Name"
@@ -29,10 +28,10 @@
 
         <EditText
             android:id="@+id/etLastNameSignup"
-            android:layout_width="122dp"
+            android:layout_width="115dp"
             android:layout_height="50dp"
             android:layout_marginTop="300dp"
-            android:layout_marginEnd="81dp"
+            android:layout_marginEnd="80dp"
             android:layout_marginBottom="10dp"
             android:background="#E3E3E3"
             android:ems="10"
@@ -41,7 +40,8 @@
             app:layout_constraintBottom_toTopOf="@+id/etEmailSignup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/etFirstNameSignup"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/etEmailSignup"

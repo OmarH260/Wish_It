@@ -29,8 +29,11 @@ import com.example.wishit.Utilities.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +44,7 @@ public class SignupFragment extends Fragment {
     private ArrayList<Uri> photos;
     private static final int GALLERY_REQUEST_CODE = 123;
     FirebaseServices fbs;
+    String userID;
     EditText etPassword, etEmail, etFirstName, etLastName, etPhoneNumber;
     Button btnSignup;
     Utils utils;
@@ -131,8 +135,28 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getActivity(), "Succeeded", Toast.LENGTH_SHORT).show();
-                        gotoLoginFragment();
-                        User user = new User(firstName, lastName, phoneNumber);
+
+                        //add user to database
+                        userID = fbs.getAuth().getCurrentUser().getUid();
+                        DocumentReference documentReference = fbs.getFire().collection("Users").document(userID);
+                        Map<String, Object> userMap = new HashMap<>();
+                        userMap.put("firstName", firstName);
+                        userMap.put("lastName", lastName);
+                        userMap.put("phoneNumber", phoneNumber);
+                        userMap.put("guest",false);
+                        userMap.put("admin",false);
+                        documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getActivity(), "User added successfully", Toast.LENGTH_SHORT).show();
+                                gotoLoginFragment();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), "Failed to add user to database", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

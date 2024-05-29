@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishit.Data.Card;
 import com.example.wishit.Data.FirebaseServices;
-import com.example.wishit.MainActivity;
+import com.example.wishit.Activties.MainActivity;
 import com.example.wishit.Pages.FilterProductsFragment;
 import com.example.wishit.R;
 import com.squareup.picasso.Picasso;

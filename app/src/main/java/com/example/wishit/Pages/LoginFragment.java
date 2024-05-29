@@ -19,6 +19,10 @@ import com.example.wishit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,7 @@ public class LoginFragment extends Fragment {
     FirebaseServices fbs;
     Button btnLogin, btnSignup, btnForgot, btnGuest;
     EditText etEmail, etPassword;
+    String userID;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,33 +97,13 @@ public class LoginFragment extends Fragment {
         btnLogin = getView().findViewById(R.id.btnLoginLogin);
         btnSignup = getView().findViewById(R.id.btnSignupLogin);
         btnGuest = getView().findViewById(R.id.btnGuestLogin);
-
-        btnGuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fbs.getAuth().signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        gotoHomeFragment();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed to login", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                User user = new User(true);
-
-            }
-        });
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 //Data validation
-                if (email.trim().isEmpty() && password.trim().isEmpty()){
+                if (email.trim().isEmpty() && password.trim().isEmpty()) {
                     Toast.makeText(getActivity(), "Some Fields are empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -151,16 +136,49 @@ public class LoginFragment extends Fragment {
                 gotoForgotFragment();
             }
         });
-    }
+        btnGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fbs.getAuth().signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        //add user to database
+                        userID = fbs.getAuth().getCurrentUser().getUid();
+                        DocumentReference documentReference = fbs.getFire().collection("Users").document(userID);
+                        Map<String, Object> userMap = new HashMap<>();
+                        userMap.put("firstName", "Guest");
+                        userMap.put("lastName", "");
+                        userMap.put("phoneNumber", "");
+                        userMap.put("guest", true);
+                        userMap.put("admin", false);
+                        documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                gotoHomeFragment();
 
-    private void gotoSignupFragment(){
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), "Failed to login", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+
+
+            }
+        });
+    }
+    private void gotoSignupFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new SignupFragment());
         ft.addToBackStack(null);
         ft.commit();
     }
 
-    private void gotoForgotFragment(){
+    private void gotoForgotFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new ForgotFragment());
         ft.addToBackStack(null);
@@ -169,17 +187,7 @@ public class LoginFragment extends Fragment {
 
     private void gotoHomeFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain,new HomeFragment());
+        ft.replace(R.id.frameLayoutMain, new HomeFragment());
         ft.commit();
     }
-
-
-    public EditText getEtEmail() {
-        return etEmail;
-    }
-
-    public EditText getEtPassword() {
-        return etPassword;
-    }
-
 }

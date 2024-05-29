@@ -4,6 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.UUID;
 
@@ -13,7 +19,7 @@ public class User implements Parcelable {
     private String phoneNumber;
     private Boolean isAdmin;
     private Boolean isGuest;
-    private String userID = null;
+    private FirebaseServices fbs;
 
     public User() {
     }
@@ -23,9 +29,6 @@ public class User implements Parcelable {
         this.firstName = "Guest";
         this.lastName = "";
         this.phoneNumber = "";
-        if(this.userID == null) {
-            this.userID = UUID.randomUUID().toString();
-        }
     }
 
     public User(String firstName, String lastName, String phoneNumber) {
@@ -34,10 +37,8 @@ public class User implements Parcelable {
         this.phoneNumber = phoneNumber;
         this.isAdmin = false;
         this.isGuest = false;
-        if(this.userID == null) {
-            this.userID = UUID.randomUUID().toString();
-        }
     }
+
 
     protected User(Parcel in) {
         firstName = in.readString();

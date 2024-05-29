@@ -114,7 +114,7 @@ public class ProductDetailsFragment extends Fragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             customerID = jsonObject.getString("id");
-                           // Toast.makeText(getContext(), customerID, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), customerID, Toast.LENGTH_SHORT).show();
 
                             getEphemeralKey(customerID);
 
@@ -256,7 +256,7 @@ public class ProductDetailsFragment extends Fragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             clientSecret = jsonObject.getString("client_secret");
-//                            Toast.makeText(getContext(), clientSecret, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), clientSecret, Toast.LENGTH_SHORT).show();
                             
                             PaymentFlow();
                         } catch (JSONException e) {

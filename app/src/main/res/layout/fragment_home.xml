@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#1E563B"
     tools:context=".Pages.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,12 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="23dp"
+            android:layout_marginBottom="1dp"
             android:fadeScrollbars="true"
             android:isScrollContainer="true"
             android:overScrollMode="ifContentScrolls"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivProfileHome">
+            app:layout_constraintTop_toBottomOf="@+id/ivAddProductHome">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,30 +45,18 @@
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/btnAddCardHome"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="18dp"
-            android:text="Add Card"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone" />
-
         <ImageButton
             android:id="@+id/btnLogoHome"
-            android:layout_width="0dp"
+            android:layout_width="170dp"
             android:layout_height="68dp"
-            android:layout_marginStart="95dp"
-            android:layout_marginEnd="44dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginEnd="94dp"
             android:backgroundTint="#00FFFFFF"
             android:src="@drawable/wish_it_250"
             app:layout_constraintBottom_toTopOf="@+id/scrollView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivProfileHome"
+            app:layout_constraintStart_toEndOf="@+id/ivAddCardHome"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,11 +66,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="26dp"
+            android:backgroundTint="#2B2D30"
             android:src="@drawable/profile1"
             app:layout_constraintBottom_toTopOf="@+id/scrollView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnLogoHome"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivAddProductHome"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/plus"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+            app:layout_constraintEnd_toStartOf="@+id/ivAddCardHome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivAddCardHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/multiple"
+            app:layout_constraintEnd_toStartOf="@+id/btnLogoHome"
+            app:layout_constraintStart_toEndOf="@+id/ivAddProductHome"
+            app:layout_constraintTop_toTopOf="@+id/ivAddProductHome" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

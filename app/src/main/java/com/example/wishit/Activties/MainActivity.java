@@ -1,4 +1,4 @@
-package com.example.wishit;
+package com.example.wishit.Activties;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,6 +12,7 @@ import com.example.wishit.Pages.AddCardFragment;
 import com.example.wishit.Pages.AddProductFragment;
 import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.Pages.LoginFragment;
+import com.example.wishit.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseServices fbs = FirebaseServices.getInstance();
 
-        if(fbs.getAuth().getCurrentUser()==null){
+        if(fbs.getAuth().getCurrentUser() == null){
             gotoLoginFragment();
         }
         else {
@@ -42,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain,new HomeFragment());
         ft.commit();
+        finish();
     }
 
     private void gotoLoginFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new LoginFragment());
         ft.commit();
+        finish();
     }
 
 

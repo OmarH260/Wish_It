@@ -4,29 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wishit.com.example.wishit.Pages.AddCardFragment">
+    tools:context="com.example.wishit.Pages.AddCardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivPhotoAddCard"
-            android:layout_width="150dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="115dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toTopOf="@+id/spProductTypeAddCard"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_menu_gallery" />
-
         <Button
             android:id="@+id/btnAddAddCard"
-            android:layout_width="230dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="250dp"
+            android:layout_marginBottom="419dp"
             android:backgroundTint="#22BE73"
             android:text="Add"
             app:cornerRadius="5dp"
@@ -38,12 +26,26 @@
         <Spinner
             android:id="@+id/spProductTypeAddCard"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="165dp"
+            android:layout_marginBottom="26dp"
             app:layout_constraintBottom_toTopOf="@+id/btnAddAddCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ivPhotoAddCard"
             app:layout_constraintTop_toBottomOf="@+id/ivPhotoAddCard" />
+
+        <ImageView
+            android:id="@+id/ivPhotoAddCard"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="269dp"
+            android:layout_marginBottom="33dp"
+            android:src="@drawable/ic_menu_gallery"
+            app:layout_constraintBottom_toTopOf="@+id/spProductTypeAddCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -12,14 +12,16 @@
 
         <Button
             android:id="@+id/btnSendForgot"
-            android:layout_width="240dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginStart="84dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
             android:layout_marginBottom="480dp"
             android:backgroundTint="#22BE73"
             android:text="Send"
             app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etEmailForgot" />
 
@@ -27,14 +29,15 @@
             android:id="@+id/etEmailForgot"
             android:layout_width="250dp"
             android:layout_height="50dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="220dp"
+            android:layout_marginEnd="80dp"
             android:background="#E3E3E3"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toTopOf="@+id/btnSendForgot"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
