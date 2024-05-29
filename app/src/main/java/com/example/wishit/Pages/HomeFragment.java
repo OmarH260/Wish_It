@@ -1,5 +1,6 @@
 package com.example.wishit.Pages;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 
@@ -18,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.wishit.Activties.MainActivity;
+import com.example.wishit.Activties.ShowProfileActivity;
 import com.example.wishit.Data.Card;
 import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.Data.Product;
@@ -43,9 +46,8 @@ public class HomeFragment extends Fragment {
     RecyclerView rvCards,rvProducts;
     CardAdapter cardAdapter;
     ProductAdapter productAdapter;
-    ImageButton btnLogoHome, btnAdd;
-    ImageView ivProfile;
-    Button  btnAddCard;
+    ImageButton btnLogoHome;
+    ImageView ivProfile, ivAddProduct, ivAddCard;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -206,18 +208,19 @@ public class HomeFragment extends Fragment {
 
     private void connectComponents() {
         //btnAdd = getView().findViewById(R.id.btnAddHome);
-        btnAddCard = getView().findViewById(R.id.btnAddCardHome);
+        ivAddProduct = getView().findViewById(R.id.ivAddProductHome);
         btnLogoHome = getView().findViewById(R.id.btnLogoHome);
         ivProfile = getView().findViewById(R.id.ivProfileHome);
+        ivAddCard = getView().findViewById(R.id.ivAddCardHome);
 
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoProfileFragment();
+                gotoShowProfileActivity();
             }
         });
 
-        btnAddCard.setOnClickListener(new View.OnClickListener() {
+        ivAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoAddCardsFragment();
@@ -240,11 +243,9 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void gotoProfileFragment() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutMain, new ProfileFragment());
-        ft.addToBackStack(null);
-        ft.commit();
+    private void gotoShowProfileActivity() {
+        Intent in = new Intent(getContext(), MainActivity.class);
+        startActivity(in);
     }
 
     private void gotoLoginFragment() {

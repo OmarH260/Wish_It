@@ -43,14 +43,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain,new HomeFragment());
         ft.commit();
-        finish();
     }
 
     private void gotoLoginFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new LoginFragment());
         ft.commit();
-        finish();
     }
 
 
