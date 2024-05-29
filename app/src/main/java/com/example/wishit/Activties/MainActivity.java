@@ -12,6 +12,7 @@ import com.example.wishit.Data.FirebaseServices;
 import com.example.wishit.Data.User;
 import com.example.wishit.Pages.AddCardFragment;
 import com.example.wishit.Pages.AddProductFragment;
+import com.example.wishit.Pages.AdminHomeFragment;
 import com.example.wishit.Pages.HomeFragment;
 import com.example.wishit.Pages.LoginFragment;
 import com.example.wishit.R;
@@ -27,29 +28,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseServices fbs = FirebaseServices.getInstance();
-        String userID = fbs.getAuth().getCurrentUser().getUid();
 
-        DocumentReference documentReference = fbs.getFire().collection("Users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                isAdmin = value.getBoolean("admin");
-            }
-        });
-
-
-        if(fbs.getAuth().getCurrentUser() == null){
-            gotoLoginFragment();
-        }
-        else if(!isAdmin){
+        if (fbs.getAuth().getCurrentUser() != null) {
             gotoHomeFragment();
         }
         else {
-
+            gotoLoginFragment();
         }
-
         //gotoAddCardFragment();
         //gotoAddProductFragment();
+    }
+
+    private void gotoAdminHomeFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain,new AdminHomeFragment());
+        ft.commit();
     }
 
     private void gotoAddProductFragment() {

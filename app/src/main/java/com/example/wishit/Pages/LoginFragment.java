@@ -3,6 +3,7 @@ package com.example.wishit.Pages;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -20,6 +21,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +47,7 @@ public class LoginFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Boolean isAdmin;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -112,6 +117,15 @@ public class LoginFragment extends Fragment {
                 fbs.getAuth().signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        String userID = fbs.getAuth().getCurrentUser().getUid();
+
+                        DocumentReference documentReference = fbs.getFire().collection("Users").document(userID);
+                        documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                isAdmin = value.getBoolean("admin");
+                            }
+                        });
                         gotoHomeFragment();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
