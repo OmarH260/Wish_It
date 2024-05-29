@@ -44,10 +44,9 @@ public class ShowProfileActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                guest = value.getBoolean("guest");
                 tvName.setText(value.getString("firstName") + " " + value.getString("lastName"));
                 tvPhone.setText(value.getString("phoneNumber"));
-                if (guest) {
+                if (tvPhone.getText().toString().trim().isEmpty()) {
                     tvPhone.setVisibility(View.GONE);
 
 

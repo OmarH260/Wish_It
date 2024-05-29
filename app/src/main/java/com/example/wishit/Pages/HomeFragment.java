@@ -14,12 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.wishit.Activties.MainActivity;
 import com.example.wishit.Activties.ShowProfileActivity;
 import com.example.wishit.Data.Card;
 import com.example.wishit.Data.FirebaseServices;
@@ -47,7 +45,7 @@ public class HomeFragment extends Fragment {
     CardAdapter cardAdapter;
     ProductAdapter productAdapter;
     ImageButton btnLogoHome;
-    ImageView ivProfile, ivAddProduct, ivAddCard;
+    ImageView ivProfile, ivAddProduct;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -211,19 +209,18 @@ public class HomeFragment extends Fragment {
         ivAddProduct = getView().findViewById(R.id.ivAddProductHome);
         btnLogoHome = getView().findViewById(R.id.btnLogoHome);
         ivProfile = getView().findViewById(R.id.ivProfileHome);
-        ivAddCard = getView().findViewById(R.id.ivAddCardHome);
+
+        ivAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAddProductsFragment();
+            }
+        });
 
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoShowProfileActivity();
-            }
-        });
-
-        ivAddCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoAddCardsFragment();
             }
         });
 
@@ -244,7 +241,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void gotoShowProfileActivity() {
-        Intent in = new Intent(getContext(), MainActivity.class);
+        Intent in = new Intent(getContext(), ShowProfileActivity.class);
         startActivity(in);
     }
 
