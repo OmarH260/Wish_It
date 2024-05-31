@@ -160,7 +160,7 @@ public class AddProductFragment extends Fragment {
                 // get data from screen
                 String tittle = etTittle.getText().toString();
                 String description = etDescription.getText().toString();
-                String price = etPrice.getText().toString();
+                String price = etPrice.getText().toString() + " $";
                 String type = spType.getSelectedItem().toString();
                 btnAdd.setText("Uploading ...");
                 btnAdd.setEnabled(false);
@@ -197,7 +197,7 @@ public class AddProductFragment extends Fragment {
                         fbs.getFire().collection("product").add(product).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.e("Failure AddProduc    t: ", e.getMessage());
+                                Log.e("Failure AddProduct: ", e.getMessage());
                             }
                         });
                     }
@@ -207,15 +207,6 @@ public class AddProductFragment extends Fragment {
                         Log.e("Failure AddProduct: ", e.getMessage());
                     }
                 });
-
-                fbs.getFire().collection("product").add(product).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("Failure AddProduct: ", e.getMessage());
-                    }
-                });
-
-
             }
         });
         btnAdd.setText("Add");

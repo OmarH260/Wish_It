@@ -181,7 +181,13 @@ public class ProductDetailsFragment extends Fragment {
         if (args != null){
             product = args.getParcelable("product");
             if (product != null){
-                tvDescription.setText(product.getDescription());
+                if (product.getDescription().toString().trim().isEmpty())
+                {
+                    tvDescription.setVisibility(View.GONE);
+                }
+                else {
+                    tvDescription.setText(product.getDescription());
+                }
                 tvPrice.setText(product.getPrice());
                 tvTitle.setText(product.getTittle());
                 rbProduct.setRating((float) product.getRating());
@@ -195,7 +201,6 @@ public class ProductDetailsFragment extends Fragment {
                 //Have to add recycler view for photos
             }
         }
-
     }
 
     private void getEphemeralKey(String customerID) {
