@@ -15,7 +15,6 @@ public class Product implements Parcelable {
     private String price;
     private double rating;
     private String type;
-    private String productId = null;
 
     public Product() {
     }
@@ -27,9 +26,6 @@ public class Product implements Parcelable {
         this.price = price;
         this.rating = rating;
         this.type = type;
-        if(this.productId == null) {
-            this.productId = UUID.randomUUID().toString();
-        }
     }
 
 
@@ -89,14 +85,6 @@ public class Product implements Parcelable {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     @NonNull
