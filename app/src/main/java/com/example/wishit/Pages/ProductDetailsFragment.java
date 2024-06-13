@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,6 +45,7 @@ import java.util.Map;
  * Use the {@link ProductDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class ProductDetailsFragment extends Fragment {
     private FirebaseServices fbs;
     private RatingBar rbProduct;
@@ -53,6 +56,7 @@ public class ProductDetailsFragment extends Fragment {
     private Button btnBuy;
     PaymentSheet paymentSheet;
     private String customerID, ephemeralKey, clientSecret;
+    private String[] payment;
     private String PUBLISHABLE_KEY = "pk_live_51Oc7KTJOFcueWEXiprglF06IgeL40if39h5BdscKRJki1eLHKpd9KrTGSLYPVLKYvQM6Rq7vp7Vk2eaZ46jyIaJk00rL7xErIu";
     private String SECRET_KEY = "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";
 
@@ -97,37 +101,33 @@ public class ProductDetailsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    // onAttach method
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         PaymentConfiguration.init(getContext(), PUBLISHABLE_KEY);
 
-        paymentSheet = new PaymentSheet(this, PaymentSheetResult ->{
+        paymentSheet = new PaymentSheet(this, PaymentSheetResult -> {
             onPaymentResult(PaymentSheetResult);
         });
 
+        createCustomer();
+    }
+
+    private void createCustomer() {
+        Log.d("Stripe", "Creating customer...");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/customers",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            customerID = jsonObject.getString("id");
-                            //Toast.makeText(getContext(), customerID, Toast.LENGTH_SHORT).show();
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        customerID = jsonObject.getString("id");
+                        Log.d("Stripe", "Customer ID: " + customerID);
 
-                            getEphemeralKey(customerID);
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+                        getEphemeralKey(customerID);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
+                }, error -> Log.e("Stripe", "Error creating customer", error)) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -138,6 +138,106 @@ public class ProductDetailsFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+    }
+
+    private void getEphemeralKey(String customerID) {
+        Log.d("Stripe", "Getting ephemeral key for customer ID: " + customerID);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/ephemeral_keys",
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        ephemeralKey = jsonObject.getString("id");
+                        Log.d("Stripe", "Ephemeral Key: " + ephemeralKey);
+
+                        getClientSecret(customerID, ephemeralKey);
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }, error -> Log.e("Stripe", "Error getting ephemeral key", error)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + SECRET_KEY);
+                headers.put("Stripe-Version", "2024-04-10");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer", customerID);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void getClientSecret(String customerID, String ephemeralKey) {
+        Log.d("Stripe", "Getting client secret for customer ID: " + customerID + " and ephemeral key: " + ephemeralKey);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/payment_intents",
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        clientSecret = jsonObject.getString("client_secret");
+                        Log.d("Stripe", "Client Secret: " + clientSecret);
+
+                        PaymentFlow();
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }, error -> {
+            // Log the error response
+            NetworkResponse networkResponse = error.networkResponse;
+            if (networkResponse != null && networkResponse.data != null) {
+                String errorMsg = new String(networkResponse.data);
+                Log.e("Stripe", "Error response: " + errorMsg);
+                Toast.makeText(getContext(), "Error getting client secret: " + errorMsg, Toast.LENGTH_LONG).show();
+            } else {
+                Log.e("Stripe", "Error getting client secret", error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + SECRET_KEY);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer", customerID);
+                params.put("amount", product.getPrice().replace("$", "").trim());// Replace "$" with empty string); // Amount in cents
+                params.put("currency", "usd");
+                params.put("automatic_payment_methods[enabled]", "true");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void PaymentFlow() {
+        Log.d("Stripe", "Starting PaymentFlow with customerID: " + customerID + ", ephemeralKey: " + ephemeralKey + ", clientSecret: " + clientSecret);
+        if (customerID != null && ephemeralKey != null && clientSecret != null) {
+            paymentSheet.presentWithPaymentIntent(
+                    clientSecret,
+                    new PaymentSheet.Configuration(
+                            "WishIt",
+                            new PaymentSheet.CustomerConfiguration(
+                                    customerID,
+                                    ephemeralKey
+                            ))
+            );
+        } else {
+            Log.e("Stripe", "PaymentFlow parameters are null");
+            Toast.makeText(getContext(), "Payment information not fully loaded", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void onPaymentResult(PaymentSheetResult paymentSheetResult) {
@@ -181,13 +281,7 @@ public class ProductDetailsFragment extends Fragment {
         if (args != null){
             product = args.getParcelable("product");
             if (product != null){
-                if (product.getDescription().toString().trim().isEmpty())
-                {
-                    tvDescription.setVisibility(View.GONE);
-                }
-                else {
-                    tvDescription.setText(product.getDescription());
-                }
+                tvDescription.setText(product.getDescription());
                 tvPrice.setText(product.getPrice());
                 tvTitle.setText(product.getTittle());
                 rbProduct.setRating((float) product.getRating());
@@ -201,115 +295,8 @@ public class ProductDetailsFragment extends Fragment {
                 //Have to add recycler view for photos
             }
         }
+
     }
-
-    private void getEphemeralKey(String customerID) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/ephemeral_keys",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            ephemeralKey = jsonObject.getString("id");
-                            //Toast.makeText(getContext(), ephemeralKey, Toast.LENGTH_SHORT).show();
-
-                            getClientSecret(customerID, ephemeralKey);
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + SECRET_KEY);
-                headers.put("Stripe-Version", "2024-04-10 ");
-                return headers;
-            }
-
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("customer", customerID);
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-    }
-
-    private void getClientSecret(String customerID, String ephemeralKey) {
-        Bundle args = getArguments();
-        if (args != null){
-            product = args.getParcelable("product");
-            if (product != null){
-                tvPrice.setText(product.getPrice());
-            }
-        }
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/payment_intents",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            clientSecret = jsonObject.getString("client_secret");
-                            //Toast.makeText(getContext(), clientSecret, Toast.LENGTH_SHORT).show();
-                            
-                            PaymentFlow();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + SECRET_KEY);
-                headers.put("Stripe-Version", "2024-04-10 ");
-                return headers;
-            }
-
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("customer", customerID);
-                params.put("amount", product.getPrice() + "00");
-                params.put("currency", "usd");
-                params.put("automatic_payment_methods[enabled]", "true");
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-    }
-
-    private void PaymentFlow() {
-        paymentSheet.presentWithPaymentIntent(
-                clientSecret,
-                new PaymentSheet.Configuration(
-                        "WishIt",
-                        new PaymentSheet.CustomerConfiguration(
-                                customerID,
-                                ephemeralKey
-                                ))
-        );
-    }
-
     private void gotoHomeFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain,new HomeFragment());
