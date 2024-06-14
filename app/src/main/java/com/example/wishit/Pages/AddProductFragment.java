@@ -128,7 +128,6 @@ public class AddProductFragment extends Fragment {
         etPrice = getView().findViewById(R.id.etPriceAddProductFragment);
         ivShow = getView().findViewById(R.id.ivShowAddProduct);
         btnAdd = getView().findViewById(R.id.btnAddAddProductFragment);
-        rbProduct = getView().findViewById(R.id.rbProductProductDetails);
         spType = getView().findViewById(R.id.spProductTypeAddProduct);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,productType);
         spType.setAdapter(adapter);

@@ -48,19 +48,14 @@ import java.util.Map;
 
 public class ProductDetailsFragment extends Fragment {
     private FirebaseServices fbs;
-    private RatingBar rbProduct;
     private ImageView ivPhoto;
     private TextView tvTitle, tvDescription, tvPrice;
     private Product product;
-    private float starRating;
     private Button btnBuy;
     PaymentSheet paymentSheet;
     private String customerID, ephemeralKey, clientSecret;
-    private String[] payment;
-    private String SECRET_KEY = "sk_test_51Oc7KTJOFcueWEXiQzHz5TKEktEQuAYE3RSFUFMI1dHi1WkkG8WDic6xgWzeT7C5lZoCNEjFNQhB8ZQMiY0E03Le00Gm16hxpu";
-    private String PUBLISHABLE_KEY = "pk_test_51Oc7KTJOFcueWEXi0wnQfbgehzS6fUJt7uiEFD8vlIel3tDwAKE6db143sOXpAMLo8m0AJCAnKgOiltqDd4NyUgj00EjlJ6b5B";
-    //private String PUBLISHABLE_KEY = "pk_live_51Oc7KTJOFcueWEXiprglF06IgeL40if39h5BdscKRJki1eLHKpd9KrTGSLYPVLKYvQM6Rq7vp7Vk2eaZ46jyIaJk00rL7xErIu";
-    //private String SECRET_KEY = "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";
+    private String PUBLISHABLE_KEY = "pk_live_51Oc7KTJOFcueWEXiprglF06IgeL40if39h5BdscKRJki1eLHKpd9KrTGSLYPVLKYvQM6Rq7vp7Vk2eaZ46jyIaJk00rL7xErIu";
+    private String SECRET_KEY = "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";
 
 
 
@@ -264,12 +259,10 @@ public class ProductDetailsFragment extends Fragment {
 
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
-        starRating = 5;
         ivPhoto = getView().findViewById(R.id.ivPhotoProductDetails);
         tvTitle = getView().findViewById(R.id.tvTitleProductDetails);
         tvDescription = getView().findViewById(R.id.tvDescriptionProductDetails);
         tvPrice = getView().findViewById(R.id.tvPriceProductDetails);
-        rbProduct = getView().findViewById(R.id.rbProductProductDetails);
         btnBuy = getView().findViewById(R.id.btnBuyProductDetails);
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -286,7 +279,6 @@ public class ProductDetailsFragment extends Fragment {
                 tvDescription.setText(product.getDescription());
                 tvPrice.setText(product.getPrice());
                 tvTitle.setText(product.getTittle());
-                rbProduct.setRating((float) product.getRating());
                 if (product.getPhoto() == null || product.getPhoto().isEmpty())
                 {
                     Picasso.get().load(R.drawable.ic_menu_gallery).into(ivPhoto);

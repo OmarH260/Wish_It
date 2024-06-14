@@ -65,7 +65,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Product product = productList.get(position);
         holder.tvTittle.setText(product.getTittle());
         //holder.tvDescription.setText(product.getDescription());
-        holder.rbProduct.setRating((float) (productList.get(position).getRating()));
         holder.tvPrice.setText(product.getPrice());
 
 
@@ -117,7 +116,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             tvTittle = itemView.findViewById(R.id.tvTitleProItem);
             tvPrice = itemView.findViewById(R.id.tvPriceProItem);
             //tvDescription = itemView.findViewById(R.id.tvDescriptionProItem);
-            rbProduct =itemView.findViewById(R.id.rbProductProItem);
             ivPhoto = itemView.findViewById(R.id.ivPhotoProItem);
         }
 
