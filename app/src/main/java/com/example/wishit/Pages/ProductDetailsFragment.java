@@ -57,8 +57,10 @@ public class ProductDetailsFragment extends Fragment {
     PaymentSheet paymentSheet;
     private String customerID, ephemeralKey, clientSecret;
     private String[] payment;
-    private String PUBLISHABLE_KEY = "pk_live_51Oc7KTJOFcueWEXiprglF06IgeL40if39h5BdscKRJki1eLHKpd9KrTGSLYPVLKYvQM6Rq7vp7Vk2eaZ46jyIaJk00rL7xErIu";
-    private String SECRET_KEY = "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";
+    private String SECRET_KEY = "sk_test_51Oc7KTJOFcueWEXiQzHz5TKEktEQuAYE3RSFUFMI1dHi1WkkG8WDic6xgWzeT7C5lZoCNEjFNQhB8ZQMiY0E03Le00Gm16hxpu";
+    private String PUBLISHABLE_KEY = "pk_test_51Oc7KTJOFcueWEXi0wnQfbgehzS6fUJt7uiEFD8vlIel3tDwAKE6db143sOXpAMLo8m0AJCAnKgOiltqDd4NyUgj00EjlJ6b5B";
+    //private String PUBLISHABLE_KEY = "pk_live_51Oc7KTJOFcueWEXiprglF06IgeL40if39h5BdscKRJki1eLHKpd9KrTGSLYPVLKYvQM6Rq7vp7Vk2eaZ46jyIaJk00rL7xErIu";
+    //private String SECRET_KEY = "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";
 
 
 
